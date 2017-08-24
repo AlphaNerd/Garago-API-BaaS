@@ -19,17 +19,23 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 		var rows = [{
 			title: "Axis",
 			columns: [{
-				text: "null"
+				text: "null",
+				locked: false
 			},{
-				text: "null"
+				text: "null",
+				locked: false
 			},{
-				text: "null"
+				text: "null",
+				locked: false
 			},{
-				text: "null"
+				text: "null",
+				locked: false
 			},{
-				text: "null"
+				text: "null",
+				locked: false
 			},{
-				text: "null"
+				text: "null",
+				locked: false
 			}]
 		}]
 		
@@ -46,6 +52,10 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 	    plan.set("columns",columns)
 	    plan.set("rows",rows)
 	    plan.set("createdBy",request.user)
+	    plan.set("locked",false)
+	    plan.set("settings",{})
+	    plan.set("footer","")
+	    plan.set("owners",[])
 
 	    ///// Save to MongoDB
 	    plan.save()
