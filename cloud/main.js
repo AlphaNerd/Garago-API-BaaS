@@ -2,6 +2,9 @@ var ActionPlan = Parse.Object.extend("ActionPlans");
 
 Parse.Cloud.define("createNewActionPlan", function(request, response) {
 	if(request.user){
+		var acl = new Parse.ACL();
+		acl.setPublicReadAccess(false);
+		acl.setWriteAccess(Parse.User.current().id, true);
 		var plan = new ActionPlan();
 		var columns = [{
 			title: "Budget",
