@@ -5,16 +5,40 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 		var plan = new ActionPlan();
 		var columns = [{
 			title: "Budget",
+			style: {
+				"background":"#f3f3f3",
+				"color":"#333"
+			}
 		},{
 			title: "Indicator",
+			style: {
+				"background":"#f3f3f3",
+				"color":"#333"
+			}
 		},{
 			title: "Deadline",
+			style: {
+				"background":"#f3f3f3",
+				"color":"#333"
+			}
 		},{
 			title: "Resources",
+			style: {
+				"background":"#f3f3f3",
+				"color":"#333"
+			}
 		},{
 			title: "Activities",
+			style: {
+				"background":"#f3f3f3",
+				"color":"#333"
+			}
 		},{
 			title: "Objectives",
+			style: {
+				"background":"#f3f3f3",
+				"color":"#333"
+			}
 		}]
 		var rows = [{
 			title: "Axis",
