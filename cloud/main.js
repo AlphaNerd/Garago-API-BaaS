@@ -4,7 +4,7 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
     var plan = new ActionPlan();
     plan.set("title",request.params.title)
     plan.set("description",request.params.description)
-    plan.set("createdBy",request.user.id)
+    plan.set("createdBy",request.user)
     plan.save()
         .then(function(results) {
             console.log(results)
