@@ -12,11 +12,11 @@ if (!databaseUri) {
 }
 
 var api = new ParseServer({
-  databaseURI: databaseUri,
-  cloud: process.env.CLOUD_CODE_MAIN,
-  appId: process.env.APP_ID,
-  masterKey: process.env.MASTER_KEY,
-  serverURL: process.env.SERVER_URL,
+  databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
+  cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
+  appId: process.env.APP_ID || 'GaragoAPI',
+  masterKey: process.env.MASTER_KEY || 'B15d1sTh3W05d!', //Add your master key here. Keep it secret!
+  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["ActionPlans"] // List of classes to support for query subscriptions
   }
