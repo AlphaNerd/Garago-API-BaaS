@@ -20,7 +20,7 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
         plan.set("locked", false)
         plan.set("settings", {})
         plan.set("footer", "")
-        plan.set("owners", [])
+        plan.set("owners", [request.user.id])
 
         ///// Save to MongoDB
         plan.save()
