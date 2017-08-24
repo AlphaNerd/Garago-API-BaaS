@@ -34,7 +34,7 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 		}]
 		var acl = new Parse.ACL();
 		acl.setPublicReadAccess(false);
-		acl.setReadAccess(request.user, true);
+		acl.setReadAccess(request.user.id, true);
 		acl.setWriteAccess(request.user.id, true);
 		plan..setACL(acl);
 	    plan.set("title",request.params.title)
