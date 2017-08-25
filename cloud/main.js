@@ -1,3 +1,10 @@
+var ColorScheme = require('color-scheme');
+var scheme = new ColorScheme;
+scheme.from_hue(21)         
+      .scheme('triade')     
+      .variation('soft');   
+var colors = scheme.colors();
+
 var ActionPlan = Parse.Object.extend("ActionPlans");
 
 Parse.Cloud.define("createNewActionPlan", function(request, response) {
@@ -18,7 +25,7 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
         plan.set("rows", rows)
         plan.set("createdBy", request.user)
         plan.set("locked", false)
-        plan.set("settings", {})
+        plan.set("settings", {'scheme':colors})
         plan.set("footer", "")
         plan.set("owners", [request.user.id])
 
