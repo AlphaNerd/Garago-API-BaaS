@@ -1,4 +1,5 @@
 var ColorScheme = require('color-scheme');
+
 var scheme = new ColorScheme;
 scheme.from_hue(21)         
       .scheme('triade')     
@@ -13,7 +14,7 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 
         for(i=0;i<columns.length;i++){
             columns[i].style = {
-                'background':colors[i],
+                'background':'#'+colors[i],
                 'color':'#333'
             }
         }
