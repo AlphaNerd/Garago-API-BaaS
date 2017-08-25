@@ -20,21 +20,21 @@ var api = new ParseServer({
   allowClientClassCreation: false,
   liveQuery: {
     classNames: ["ActionPlans","Messages"] // List of classes to support for query subscriptions
-  },
-  filesAdapter: {
-    module: "parse-server-s3-adapter",
-    options: {
-      bucket: process.env.S3_BUCKET,
-      // optional:
-      region: 'canada-central', // default value
-      bucketPrefix: '', // default value
-      directAccess: false, // default value
-      baseUrl: null, // default value
-      baseUrlDirect: false, // default value
-      signatureVersion: 'v4', // default value
-      globalCacheControl: null, // default value. Or 'public, max-age=86400' for 24 hrs Cache-Control
-      ServerSideEncryption: 'AES256|aws:kms' //AES256 or aws:kms, or if you do not pass this, encryption won't be done
-    }
+  }
+  // filesAdapter: {
+  //   module: "parse-server-s3-adapter",
+  //   options: {
+  //     bucket: process.env.S3_BUCKET,
+  //     // optional:
+  //     region: 'canada-central', // default value
+  //     bucketPrefix: '', // default value
+  //     directAccess: false, // default value
+  //     baseUrl: null, // default value
+  //     baseUrlDirect: false, // default value
+  //     signatureVersion: 'v4', // default value
+  //     globalCacheControl: null, // default value. Or 'public, max-age=86400' for 24 hrs Cache-Control
+  //     ServerSideEncryption: 'AES256|aws:kms' //AES256 or aws:kms, or if you do not pass this, encryption won't be done
+  //   }
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
