@@ -11,6 +11,13 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
     if (request.user) {
         var plan = new ActionPlan();
 
+        for(i=0;i<columns.length;i++){
+            column[i].style = {
+                'background':colors[i],
+                'color':'#333'
+            }
+        }
+
         ///// Set User ACL Privelages
         var acl = new Parse.ACL();
         acl.setPublicReadAccess(false);
