@@ -8,7 +8,8 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 
         //// paint some color in it
         var scheme = new ColorScheme;
-        scheme.from_hue(21)         
+
+        scheme.from_hue(getRandomInt(0,21))         
               .scheme('triade')     
               .variation('soft');   
         var colors = scheme.colors();
@@ -50,6 +51,10 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
         response.error("User must be logged in to create plan.")
     }
 });
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 var columns = [{
     title: "Budget",
