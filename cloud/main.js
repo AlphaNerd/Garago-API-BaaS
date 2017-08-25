@@ -12,7 +12,7 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
         var plan = new ActionPlan();
 
         for(i=0;i<columns.length;i++){
-            column[i].style = {
+            columns[i].style = {
                 'background':colors[i],
                 'color':'#333'
             }
