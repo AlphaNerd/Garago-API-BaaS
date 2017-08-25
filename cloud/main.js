@@ -1,17 +1,17 @@
 var ColorScheme = require('color-scheme');
 
-var scheme = new ColorScheme;
-scheme.from_hue(21)         
-      .scheme('triade')     
-      .variation('soft');   
-var colors = scheme.colors();
-
 var ActionPlan = Parse.Object.extend("ActionPlans");
 
 Parse.Cloud.define("createNewActionPlan", function(request, response) {
     if (request.user) {
         var plan = new ActionPlan();
 
+        //// paint some color in it
+        var scheme = new ColorScheme;
+        scheme.from_hue(21)         
+              .scheme('triade')     
+              .variation('soft');   
+        var colors = scheme.colors();
         for(i=0;i<columns.length;i++){
             columns[i].style = {
                 'background':'#'+colors[i],
