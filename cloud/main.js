@@ -1,6 +1,7 @@
 var ColorScheme = require('color-scheme');
 
 var ActionPlan = Parse.Object.extend("ActionPlans");
+var Project = Parse.Object.extend("Projects");
 
 Parse.Cloud.define("createNewActionPlan", function(request, response) {
     if (request.user) {
@@ -40,6 +41,37 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 
         ///// Save to MongoDB
         plan.save()
+            .then(function(results) {
+                console.log(results)
+                response.success(results);
+            })
+            .catch(function(e) {
+                response.error(e);
+            });
+    } else {
+        response.error("User must be logged in to create plan.")
+    }
+});
+
+Parse.Cloud.define("createNewProject", function(request, response) {
+    if (request.user) {
+        var project = new Project();
+
+        ///// Set User ACL Privelages
+        var acl = new Parse.ACL();
+        acl.setPublicReadAccess(false);
+        acl.setPublicWriteAccess(false);
+        acl.setReadAccess(request.user.id, true);
+        acl.setWriteAccess(request.user.id, true);
+        project.setACL(acl);
+
+        ///// Set object properties for new Action project
+        project.set("name", request.params.name)
+        project.set("description", request.params.description)
+        project.set("owners", [request.user.id])
+
+        ///// Save to MongoDB
+        project.save()
             .then(function(results) {
                 console.log(results)
                 response.success(results);
