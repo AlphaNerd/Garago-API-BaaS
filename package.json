@@ -21,8 +21,5 @@
   },
   "engines": {
     "node": ">=4.3"
-  },
-  "scripts":{
-    "save": "git add . && git commit -m \"auto-saving\" && git push origin master"
   }
 }
