@@ -19,7 +19,7 @@ var api = new ParseServer({
   serverURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
   allowClientClassCreation: false,
   liveQuery: {
-    classNames: ["ActionPlans","Messages"] // List of classes to support for query subscriptions
+    classNames: ["ActionPlans","Messages","Projects","Organizations"] // List of classes to support for query subscriptions
   }
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
