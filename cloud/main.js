@@ -4,21 +4,21 @@ var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
 var Activities = Parse.Object.extend("Activities");
 
-Parse.Cloud.define("createNewActionPlan", function(request, response) {
+Parse.Cloud.define("createNewActionPlan", function (request, response) {
     if (request.user) {
         var plan = new ActionPlan();
 
         //// paint some color in it
         var scheme = new ColorScheme;
 
-        scheme.from_hue(getRandomInt(0,21))         
-              .scheme('triade')     
-              .variation('soft');   
+        scheme.from_hue(getRandomInt(0, 21))
+            .scheme('triade')
+            .variation('soft');
         var colors = scheme.colors();
-        for(i=0;i<columns.length;i++){
+        for (i = 0; i < columns.length; i++) {
             columns[i].style = {
-                'background':'#'+colors[i],
-                'color':'#333'
+                'background': '#' + colors[i],
+                'color': '#333'
             }
         }
 
@@ -36,17 +36,17 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
         plan.set("rows", rows)
         plan.set("createdBy", request.user)
         plan.set("locked", false)
-        plan.set("settings", {'scheme':colors})
+        plan.set("settings", { 'scheme': colors })
         plan.set("footer", "")
         plan.set("owners", [request.user.id])
 
         ///// Save to MongoDB
         plan.save()
-            .then(function(results) {
+            .then(function (results) {
                 console.log(results)
                 response.success(results);
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 response.error(e);
             });
     } else {
@@ -54,7 +54,26 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
     }
 });
 
-Parse.Cloud.define("createNewProject", function(request, response) {
+Parse.Cloud.afterSave("ActionPlans", function (request, response) {
+    if (request.object.get("published") == true) {
+        var acl = new Parse.ACL();
+        acl.setPublicReadAccess(false);
+        acl.setPublicWriteAccess(false);
+        acl.setReadAccess(request.user.id, true);
+        acl.setWriteAccess(request.user.id, false);
+        request.object.setACL(acl);
+        response.success("ACL updated");
+    } else {
+        acl.setPublicReadAccess(false);
+        acl.setPublicWriteAccess(false);
+        acl.setReadAccess(request.user.id, true);
+        acl.setWriteAccess(request.user.id, true);
+        request.object.setACL(acl);
+        response.success("ACL updated");
+    }
+});
+
+Parse.Cloud.define("createNewProject", function (request, response) {
     if (request.user) {
         var project = new Project();
 
@@ -73,11 +92,11 @@ Parse.Cloud.define("createNewProject", function(request, response) {
 
         ///// Save to MongoDB
         project.save()
-            .then(function(results) {
+            .then(function (results) {
                 console.log(results)
                 response.success(results);
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 response.error(e);
             });
     } else {
@@ -86,7 +105,7 @@ Parse.Cloud.define("createNewProject", function(request, response) {
 });
 
 
-Parse.Cloud.define("createNewActivity", function(request, response) {
+Parse.Cloud.define("createNewActivity", function (request, response) {
     if (request.user) {
         var activity = new Activities();
 
@@ -105,11 +124,11 @@ Parse.Cloud.define("createNewActivity", function(request, response) {
 
         ///// Save to MongoDB
         activity.save()
-            .then(function(results) {
+            .then(function (results) {
                 console.log(results)
                 response.success(results);
             })
-            .catch(function(e) {
+            .catch(function (e) {
                 response.error(e);
             });
     } else {
