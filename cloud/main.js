@@ -56,20 +56,9 @@ Parse.Cloud.define("createNewActionPlan", function (request, response) {
 
 Parse.Cloud.afterSave("ActionPlans", function (request, response) {
     if (request.object.get("published") == true) {
-        var acl = new Parse.ACL();
-        acl.setPublicReadAccess(false);
-        acl.setPublicWriteAccess(false);
-        acl.setReadAccess(request.user.id, true);
-        acl.setWriteAccess(request.user.id, false);
-        request.object.setACL(acl);
-        response.success("ACL updated");
+        response.success("Published: Turn off editing");
     } else {
-        acl.setPublicReadAccess(false);
-        acl.setPublicWriteAccess(false);
-        acl.setReadAccess(request.user.id, true);
-        acl.setWriteAccess(request.user.id, true);
-        request.object.setACL(acl);
-        response.success("ACL updated");
+        response.success("Unpublished: Turn on editing");
     }
 });
 
