@@ -136,7 +136,7 @@ Parse.Cloud.afterSave("Files", function (request, response) {
 });
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
-    console.log("BEFORE SAVE: ",request.object.get("name"))
+    console.log("BEFORE SAVE: ",request.title)
     // request.object.set("type",extension)
     response.success(request.object)
     // if (request.object.get("published") == true) {
