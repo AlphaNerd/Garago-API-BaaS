@@ -126,7 +126,7 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
 });
 
 Parse.Cloud.afterSave("Files", function (request, response) {
-    console.log(request.object)
+    console.log("AFTER SAVE: ",request.object)
     response.success(request.object)
     // if (request.object.get("published") == true) {
     //     response.success("Published: Turn off editing");
@@ -136,7 +136,7 @@ Parse.Cloud.afterSave("Files", function (request, response) {
 });
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
-    console.log(request.object)
+    console.log("BEFORE SAVE: ",request.object)
     // request.object.set("type",extension)
     response.success(request.object)
     // if (request.object.get("published") == true) {
