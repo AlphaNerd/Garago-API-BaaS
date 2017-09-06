@@ -127,8 +127,8 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
 
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
-    var title = request.object.get("file")._name
-    request.object.set("title",title)
+    var title = request.object.get("file")._name.split("_")
+    request.object.set("title",title[1])
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type[type.length-1])
     request.object.set("createdBy",request.user)
