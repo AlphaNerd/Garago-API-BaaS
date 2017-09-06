@@ -125,6 +125,16 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
     }
 });
 
+Parse.Cloud.afterSave("Files", function (request, response) {
+    console.log(request.object)
+    response.success(request.object)
+    // if (request.object.get("published") == true) {
+    //     response.success("Published: Turn off editing");
+    // } else {
+    //     response.success("Unpublished: Turn on editing");
+    // }
+});
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
