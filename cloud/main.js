@@ -131,6 +131,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     request.object.set("title",title)
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type[type.length-1])
+    request.object.set("createdBy",request.user)
     response.success()
 });
 
