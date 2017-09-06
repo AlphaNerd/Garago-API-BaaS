@@ -130,9 +130,10 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     var title = request.object.get("file")._name
     request.object.set("title",title)
     var type = request.object.get("file")._name.split(".")
-    request.object.set("type",type)
+    request.object.set("type",type[type.length-1])
     response.success()
 });
+
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
