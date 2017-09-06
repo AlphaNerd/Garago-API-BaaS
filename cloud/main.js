@@ -125,10 +125,6 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
     }
 });
 
-Parse.Cloud.afterSave("Files", function (request, response) {
-    console.log("AFTER SAVE: ",request.object)
-    response.success(request.object)
-});
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
     var title = request.object.get("file")._name
