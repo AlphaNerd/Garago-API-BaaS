@@ -128,31 +128,22 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
 Parse.Cloud.afterSave("Files", function (request, response) {
     console.log("AFTER SAVE: ",request.object)
     response.success(request.object)
-    // if (request.object.get("published") == true) {
-    //     response.success("Published: Turn off editing");
-    // } else {
-    //     response.success("Unpublished: Turn on editing");
-    // }
 });
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
-    if (request.user) {
-        var title = request.object.get("file")._name
-        request.object.set("title",title)
-        var type = request.object.get("file")._name.split(".")
-        request.object.set("type",type)
-    
-        var acl = new Parse.ACL();
-        acl.setPublicReadAccess(false);
-        acl.setPublicWriteAccess(false);
-        acl.setReadAccess(request.user.id, true);
-        acl.setWriteAccess(request.user.id, true);
-        request.object.setACL(acl);
-    
-        response.success(request.object)
-    }else{
-        response.error("You need to be logged in to upload files.")
-    }
+    var title = request.object.get("file")._name
+    request.object.set("title",title)
+    var type = request.object.get("file")._name.split(".")
+    request.object.set("type",type)
+
+    var acl = new Parse.ACL();
+    acl.setPublicReadAccess(false);
+    acl.setPublicWriteAccess(false);
+    acl.setReadAccess(request.user.id, true);
+    acl.setWriteAccess(request.user.id, true);
+    request.object.setACL(acl);
+
+    response.success(request.object)
 });
 
 function getRandomInt(min, max) {
