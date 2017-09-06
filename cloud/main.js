@@ -143,7 +143,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     acl.setWriteAccess(request.user.id, true);
     request.object.setACL(acl);
 
-    response.success(request.object)
+    response.success()
 });
 
 function getRandomInt(min, max) {
