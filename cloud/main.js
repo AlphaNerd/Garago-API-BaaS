@@ -131,14 +131,6 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     request.object.set("title",title)
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type)
-
-    var acl = new Parse.ACL();
-    acl.setPublicReadAccess(false);
-    acl.setPublicWriteAccess(false);
-    acl.setReadAccess(request.user.id, true);
-    acl.setWriteAccess(request.user.id, true);
-    request.object.setACL(acl);
-
     response.success()
 });
 
