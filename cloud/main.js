@@ -54,14 +54,6 @@ Parse.Cloud.define("createNewActionPlan", function (request, response) {
     }
 });
 
-Parse.Cloud.afterSave("ActionPlans", function (request, response) {
-    if (request.object.get("published") == true) {
-        response.success("Published: Turn off editing");
-    } else {
-        response.success("Unpublished: Turn on editing");
-    }
-});
-
 Parse.Cloud.define("createNewProject", function (request, response) {
     if (request.user) {
         var project = new Project();
@@ -92,7 +84,6 @@ Parse.Cloud.define("createNewProject", function (request, response) {
         response.error("User must be logged in to create plan.")
     }
 });
-
 
 Parse.Cloud.define("createNewActivity", function (request, response) {
     if (request.user) {
@@ -125,6 +116,9 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
     }
 });
 
+Parse.Cloud.define("getUsersByIDs", function (request, response) {
+    var ids = request.params.ids
+});
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
     var title = request.object.get("file")._name.split("_")
@@ -133,16 +127,29 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     request.object.set("type",type[type.length-1])
     request.object.set("createdBy",request.user.id)
 
-    /// set icons
-    if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
-        request.object.set("icon","fa-file-image-o")
-    }else if(type[type.length-1] == "pdf"){
-        request.object.set("icon","fa-file-pdf-o")
-    }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
-        request.object.set("icon","fa-file-text-o")
+    try{
+        /// set icons
+        if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
+            request.object.set("icon","fa-file-image-o")
+        }else if(type[type.length-1] == "pdf"){
+            request.object.set("icon","fa-file-pdf-o")
+        }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
+            request.object.set("icon","fa-file-text-o")
+        }
+    }
+    catch(e){
+        console.log(e)
     }
 
     response.success()
+});
+
+Parse.Cloud.afterSave("ActionPlans", function (request, response) {
+    if (request.object.get("published") == true) {
+        response.success("Published: Turn off editing");
+    } else {
+        response.success("Unpublished: Turn on editing");
+    }
 });
 
 
