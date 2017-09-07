@@ -117,7 +117,16 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
 });
 
 Parse.Cloud.define("getUsersByIDs", function (request, response) {
-    var ids = request.params.ids
+    var members = request.params.ids
+    const query = new Parse.Query("User");
+    query.containedIn("objectId", members);
+      .find()
+      .then((results) => {
+        response.success(results);
+      })
+      .catch(() =>  {
+        response.error("user lookup failed");
+      });
 });
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
