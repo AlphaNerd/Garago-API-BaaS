@@ -120,13 +120,14 @@ Parse.Cloud.define("getUsersByIDs", function (request, response) {
     var members = request.params.ids
     const query = new Parse.Query("User");
     query.containedIn("objectId", members);
-      .find()
-      .then((results) => {
-        response.success(results);
-      })
-      .catch(() =>  {
-        response.error("user lookup failed");
-      });
+    query.find({
+        success: function(res){
+            console.log(res)
+        },
+        error: function(e,r){
+            console.log(e,r)
+        }
+    })
 });
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
