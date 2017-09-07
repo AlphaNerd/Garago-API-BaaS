@@ -134,11 +134,11 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     request.object.set("createdBy",request.user.id)
 
     /// set icons
-    if(type == "png" || type == "jpg" || type == "jpeg" || type == "gif"){
+    if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
         request.object.set("icon","fa-file-image-o")
-    }else if(type == "pdf"){
+    }else if(type[type.length-1] == "pdf"){
         request.object.set("icon","fa-file-pdf-o")
-    }else if(type == "doc" || type == "docx"){
+    }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx"){
         request.object.set("icon","fa-file-text-o")
     }
 
