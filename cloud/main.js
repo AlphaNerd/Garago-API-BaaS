@@ -125,7 +125,9 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     request.object.set("title",title[1])
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type[type.length-1])
-    request.object.set("createdBy",request.user.id || "ROGIfaTamg")
+    
+    var user = request.user.id || "ROGIfaTamg"
+    request.object.set("createdBy",user)
 
     try{
         /// set icons
