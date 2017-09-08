@@ -118,11 +118,13 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
 
 Parse.Cloud.define("getUsersByIDs", function (request, response) {
     var members = request.params.ids
+    console.log("GET MEMBERS")
     const query = new Parse.Query("User");
     query.containedIn("objectId", members);
     query.find({
         success: function(res){
             console.log(res)
+            response.send(res)
         },
         error: function(e,r){
             console.log(e,r)
