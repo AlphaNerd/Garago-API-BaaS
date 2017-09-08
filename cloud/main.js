@@ -129,6 +129,7 @@ Parse.Cloud.define("getUsersByIDs", function (request, response) {
         },
         error: function(e,r){
             console.log(e,r)
+            response.error(e,r)
         }
     })
 });
