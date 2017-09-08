@@ -3,6 +3,7 @@ var ColorScheme = require('color-scheme');
 var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
 var Activities = Parse.Object.extend("Activities");
+var Users = Parse.Object.extend("User");
 
 Parse.Cloud.define("createNewActionPlan", function (request, response) {
     if (request.user) {
@@ -119,12 +120,12 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
 Parse.Cloud.define("getUsersByIDs", function (request, response) {
     var members = request.params.ids
     console.log("GET MEMBERS")
-    const query = new Parse.Query("User");
+    const query = new Parse.Query(Users);
     query.containedIn("objectId", members);
     query.find({
         success: function(res){
             console.log(res)
-            response.send(res)
+            response.success(res)
         },
         error: function(e,r){
             console.log(e,r)
