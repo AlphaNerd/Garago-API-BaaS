@@ -7,8 +7,6 @@ var path = require('path');
 
 var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
-  "accessKey": "AKIAIBFVQAAG4YFG2QMA",
-  "secretKey": "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",
   "bucket": "garago-bucket",
   // optional:
   "region": 'us-east-1', // default value
