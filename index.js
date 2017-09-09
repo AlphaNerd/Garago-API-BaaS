@@ -4,6 +4,22 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
+
+var S3Adapter = require('parse-server-s3-adapter');
+var s3Options = {
+  "accessKey": "AKIAIBFVQAAG4YFG2QMA",
+  "secretKey": "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",
+  "bucket": "garago-bucket",
+  // optional:
+  "region": 'us-east-1', // default value
+  "bucketPrefix": '', // default value
+  "directAccess": false, // default value
+  "baseUrl": null // default value
+  "signatureVersion": 'v4', // default value
+  "globalCacheControl": null // default value. Or 'public, max-age=86400' for 24 hrs Cache-Control
+}
+var s3Adapter = new S3Adapter(s3Options);
+
 var FSFilesAdapter = require('parse-server-fs-adapter');
 var fsAdapter = new FSFilesAdapter({
     "filesSubDirectory": "./smart_library" // optional
@@ -25,7 +41,7 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
   },
-  filesAdapter: fsAdapter
+  filesAdapter: s3Adapter
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
