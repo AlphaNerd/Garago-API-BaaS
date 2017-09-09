@@ -13,7 +13,7 @@ var s3Options = {
   "bucketPrefix": '', // default value
   "directAccess": false, // default value
   "baseUrl": null // default value
-  "signatureVersion": 'v4', // default value
+  // "signatureVersion": 'v4', // default value
   "globalCacheControl": null // default value. Or 'public, max-age=86400' for 24 hrs Cache-Control
 }
 var s3Adapter = new S3Adapter(s3Options);
