@@ -9,12 +9,12 @@ var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
   "bucket": "garago-bucket",
   // optional:
-  "region": 'us-east-1', // default value
-  "bucketPrefix": '', // default value
-  "directAccess": false, // default value
-  "baseUrl": null // default value
+  // "region": 'us-east-1', // default value
+  // "bucketPrefix": '', // default value
+  // "directAccess": false, // default value
+  // "baseUrl": null // default value
   // "signatureVersion": 'v4', // default value
-  "globalCacheControl": null // default value. Or 'public, max-age=86400' for 24 hrs Cache-Control
+  // "globalCacheControl": null // default value. Or 'public, max-age=86400' for 24 hrs Cache-Control
 }
 var s3Adapter = new S3Adapter(s3Options);
 
