@@ -39,7 +39,16 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
   },
-  filesAdapter: s3Adapter
+  filesAdapter: s3Adapter,
+  emailAdapter: {
+      module: "parse-server-amazon-ses-adapter",
+      options: {
+         from: "Garago <noreply@garago.net>",
+         accessKeyId: "AKIAIBFVQAAG4YFG2QMA",
+         secretAccessKey: "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",
+         region: "ca-central-1"
+      }
+   }
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
