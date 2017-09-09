@@ -39,6 +39,7 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
   },
+  verifyUserEmails: true,
   filesAdapter: s3Adapter,
   emailAdapter: {
       module: "parse-server-amazon-ses-adapter",
