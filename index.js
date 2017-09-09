@@ -9,7 +9,7 @@ var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
   "bucket": "garago-bucket",
   // optional:
-  // "region": "ca-central-1",
+  // "region": 'us-east-1', // default value
   // "bucketPrefix": '', // default value
   // "directAccess": false, // default value
   // "baseUrl": null // default value
@@ -39,7 +39,7 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
   },
-  verifyUserEmails: true,
+  // verifyUserEmails: true,
   filesAdapter: s3Adapter,
   emailAdapter: {
       module: "parse-server-amazon-ses-adapter",
