@@ -9,7 +9,7 @@ var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
   "bucket": "garago-bucket",
   // optional:
-  "region": "ca-central-1",
+  // "region": "ca-central-1",
   // "bucketPrefix": '', // default value
   // "directAccess": false, // default value
   // "baseUrl": null // default value
