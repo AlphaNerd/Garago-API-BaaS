@@ -147,7 +147,9 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
                 console.log(results)
                 if(results[0].id){
                     var obj = results[0]
-                    obj.set("users_favorite", user)
+                    var users = results[0].get("users_favorite")
+                    users.push(user)
+                    obj.set("users_favorite", users)
                     obj.save({
                         success: function(res){
                             console.log(res)
