@@ -4,6 +4,7 @@ var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
 var Activities = Parse.Object.extend("Activities");
 var Users = Parse.Object.extend("User");
+var Files = Parse.Object.extend("Files");
 
 Parse.Cloud.define("createNewActionPlan", function (request, response) {
     if (request.user) {
@@ -132,6 +133,41 @@ Parse.Cloud.define("getUsersByIDs", function (request, response) {
             response.error(e,r)
         }
     })
+});
+
+Parse.Cloud.define("addUserFavFile", function (request, response) {
+    if (request.user) {
+        var query = new Parse.Query(Files)
+        var fileID = rquest.params.fileID
+        var user = rquest.user.id
+        query.equalTo("objectId",fileID)
+        ///// Find Object to set as user favorite
+        query.find()
+            .then(function (results) {
+                console.log(results)
+                if(results[0].id){
+                    var obj = results[0]
+                    obj.set("users_favorite", user)
+                    obj.save({
+                        success: function(res){
+                            console.log(res)
+                            response.success(res);
+                        },
+                        error: function(e,r){
+                            console.warn(e,r)
+                            response.error(e);
+                        }
+                    })
+                }else{
+                    response.success("Can't find this file!");
+                }
+            })
+            .catch(function (e) {
+                response.error(e);
+            });
+    } else {
+        response.error("User must be logged in to create plan.")
+    }
 });
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
