@@ -138,8 +138,8 @@ Parse.Cloud.define("getUsersByIDs", function (request, response) {
 Parse.Cloud.define("addUserFavFile", function (request, response) {
     if (request.user) {
         var query = new Parse.Query(Files)
-        var fileID = rquest.params.fileID
-        var user = rquest.user.id
+        var fileID = request.params.fileID
+        var user = request.user.id
         query.equalTo("objectId",fileID)
         ///// Find Object to set as user favorite
         query.find()
