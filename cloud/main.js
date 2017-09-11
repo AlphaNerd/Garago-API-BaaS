@@ -153,11 +153,11 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
                     obj.set("users_favorite", [users])
                     obj.save({
                         success: function(res){
-                            console.log(res)
+                            console.log("SAVED AS FAVORITE: ",res)
                             response.success(res);
                         },
                         error: function(e,r){
-                            console.warn(e,r)
+                            console.warn("ERROR SAVING FAV: ",e,r)
                             response.error(e);
                         }
                     })
