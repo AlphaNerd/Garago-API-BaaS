@@ -173,34 +173,34 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
     }
 });
 
-// Parse.Cloud.beforeSave("Files", function (request, response) {
-//     var title = request.object.get("file")._name.split("_")
-//     request.object.set("title",title[1])
-//     var type = request.object.get("file")._name.split(".")
-//     request.object.set("type",type[type.length-1])
+Parse.Cloud.beforeSave("Files", function (request, response) {
+    var title = request.object.get("file")._name.split("_")
+    request.object.set("title",title[1])
+    var type = request.object.get("file")._name.split(".")
+    request.object.set("type",type[type.length-1])
 
-//     if(request.user){
-//         request.object.set("createdBy",request.user.id)
-//     }else{
-//         request.object.set("createdBy","ROGIfaTamg")
-//     }
+    if(request.user){
+        request.object.set("createdBy",request.user.id)
+    }else{
+        request.object.set("createdBy","ROGIfaTamg")
+    }
 
-//     try{
-//         /// set icons
-//         if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
-//             request.object.set("icon","fa-file-image-o")
-//         }else if(type[type.length-1] == "pdf"){
-//             request.object.set("icon","fa-file-pdf-o")
-//         }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
-//             request.object.set("icon","fa-file-text-o")
-//         }
-//     }
-//     catch(e){
-//         console.log(e)
-//     }
+    try{
+        /// set icons
+        if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
+            request.object.set("icon","fa-file-image-o")
+        }else if(type[type.length-1] == "pdf"){
+            request.object.set("icon","fa-file-pdf-o")
+        }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
+            request.object.set("icon","fa-file-text-o")
+        }
+    }
+    catch(e){
+        console.log(e)
+    }
 
-//     response.success()
-// });
+    response.success()
+});
 
 Parse.Cloud.afterSave("ActionPlans", function (request, response) {
     if (request.object.get("published") == true) {
