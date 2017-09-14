@@ -150,9 +150,9 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
                     var obj = results[0]
                     var users = obj.get("users_favorite") || []
                     users.push(user)
-                    obj.set("users_favorite", users)
+                    results[0].set("users_favorite", users)
                     console.log("USERS: ",users)
-                    obj.save({
+                    results[0].save({
                         success: function(res){
                             console.log("SAVED AS FAVORITE: ",res)
                             response.success(res);
@@ -183,7 +183,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     if(request.user){
         request.object.set("createdBy",request.user.id)
     }else{
-        request.object.set("createdBy","ROGIfaTamg")
+        // request.object.set("createdBy","ROGIfaTamg")
     }
 
     try{
