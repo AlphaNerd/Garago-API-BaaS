@@ -18,11 +18,6 @@ var s3Options = {
 }
 var s3Adapter = new S3Adapter(s3Options);
 
-var FSFilesAdapter = require('parse-server-fs-adapter');
-var fsAdapter = new FSFilesAdapter({
-    "filesSubDirectory": "./smart_library" // optional
-});
-
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
 if (!databaseUri) {
@@ -71,9 +66,9 @@ app.get('/test', function(req, res) {
 
 // There will be a test page available on the /test path of your server url
 // Remove this before launching your app
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/public/welcome.html'));
-});
+// app.get('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, '/public/welcome.html'));
+// });
 
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
