@@ -32,7 +32,7 @@ var api = new ParseServer({
   serverURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
   publicServerURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
   allowClientClassCreation: false,
-  // verifyUserEmails: true,
+  verifyUserEmails: true,
   appName: 'GaragoAPI',
   liveQuery: {
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
@@ -44,7 +44,8 @@ var api = new ParseServer({
          from: "Garago <noreply@garago.net>",
          accessKeyId: "AKIAIBFVQAAG4YFG2QMA",
          secretAccessKey: "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",
-         region: "ca-central-1"
+         region: "ca-central-1",
+         
       }
    }
 });
