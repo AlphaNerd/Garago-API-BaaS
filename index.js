@@ -29,14 +29,13 @@ var api = new ParseServer({
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
   appId: process.env.APP_ID,
   masterKey: process.env.MASTER_KEY, //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
+  publicServerURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
   allowClientClassCreation: false,
   // verifyUserEmails: true,
-  // appName: 'GaragoAPI',
+  appName: 'GaragoAPI',
   liveQuery: {
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
   },
-  // verifyUserEmails: true,
   filesAdapter: s3Adapter,
   emailAdapter: {
       module: "parse-server-amazon-ses-adapter",
