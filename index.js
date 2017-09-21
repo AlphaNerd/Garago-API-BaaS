@@ -48,7 +48,7 @@ var api = new ParseServer({
         templates: {
           passwordResetEmail: {
             subject: 'Reset your password',
-            pathHtml: __dirname + 'path/to/templates/password_reset_email.html',
+            pathHtml: __dirname + '/public/email_templates/password_reset_email.html',
             callback: (user) => {
                 return {
                   firstName: user.get('firstName')
@@ -58,7 +58,7 @@ var api = new ParseServer({
           },
           verificationEmail: {
             subject: 'Confirm your account',
-            pathHtml: __dirname + 'path/to/templates/verification_email.html',
+            pathHtml: __dirname + '/public/email_templates/verification_email.html',
             callback: (user) => {
                 return {
                   firstName: user.get('firstName')
@@ -68,7 +68,7 @@ var api = new ParseServer({
           },
           customEmailAlert: {
             subject: 'Urgent notification!',
-            pathHtml: __dirname + 'path/to/templates/custom_alert.html',
+            pathHtml: __dirname + '/public/email_templates/custom_alert.html',
           }
         }
       }
