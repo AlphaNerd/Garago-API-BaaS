@@ -41,11 +41,36 @@ var api = new ParseServer({
   emailAdapter: {
       module: "parse-server-amazon-ses-adapter",
       options: {
-         from: "Garago <noreply@garago.net>",
-         accessKeyId: "AKIAIBFVQAAG4YFG2QMA",
-         secretAccessKey: "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",
-         region: "ca-central-1",
-         
+        from: "Garago <noreply@garago.net>",
+        accessKeyId: "AKIAIBFVQAAG4YFG2QMA",
+        secretAccessKey: "VZSA00HwAIbOwhC9xW/A/iaeHGsq0oOzEJsXhL+J",
+        region: "ca-central-1",
+        templates: {
+          passwordResetEmail: {
+            subject: 'Reset your password',
+            pathHtml: __dirname + 'path/to/templates/password_reset_email.html',
+            callback: (user) => {
+                return {
+                  firstName: user.get('firstName')
+                }
+              }
+              // Now you can use {{firstName}} in your templates
+          },
+          verificationEmail: {
+            subject: 'Confirm your account',
+            pathHtml: __dirname + 'path/to/templates/verification_email.html',
+            callback: (user) => {
+                return {
+                  firstName: user.get('firstName')
+                }
+              }
+              // Now you can use {{firstName}} in your templates
+          },
+          customEmailAlert: {
+            subject: 'Urgent notification!',
+            pathHtml: __dirname + 'path/to/templates/custom_alert.html',
+          }
+        }
       }
    }
 });
