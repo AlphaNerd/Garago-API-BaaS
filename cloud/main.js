@@ -145,7 +145,7 @@ Parse.Cloud.define("getUserFavFiles", function (request, response) {
         query.find()
             .then(function (results) {
                 console.log("Found User: ",results[0])
-                var files = resp[0].relation("favorite_files");
+                var files = results[0].relation("favorite_files");
                 files.query().find().then(function(files){
                     var obj = []
                     for(i=0;i<files.length;i++){
