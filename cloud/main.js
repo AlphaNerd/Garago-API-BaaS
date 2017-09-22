@@ -135,6 +135,36 @@ Parse.Cloud.define("getUsersByIDs", function (request, response) {
     })
 });
 
+Parse.Cloud.define("getUserFavFiles", function (request, response) {
+    if (request.user) {
+        var query = new Parse.Query(Users)
+        var user = request.user.id
+        query.equalTo("objectId",user)
+        query.include("favorite_files")
+        ///// Find Object to set as user favorite
+        query.find()
+            .then(function (results) {
+                console.log("Found User: ",results[0])
+                var files = resp[0].relation("favorite_files");
+                files.query().find().then(function(files){
+                    var obj = []
+                    for(i=0;i<files.length;i++){
+                        var file = files[i].attributes
+                        file.createdByUser = files[i].get("createdByUser").get("username")
+                        obj.push(file)
+                    }
+                    console.log("FAVORITE FILES FOUND: ",files)
+                    response.success(obj)
+                });
+            })
+            .catch(function (e) {
+                response.error(e);
+            });
+    } else {
+        response.error("User must be logged in to create plan.")
+    }
+});
+
 Parse.Cloud.define("addUserFavFile", function (request, response) {
     if (request.user) {
         var query = new Parse.Query(Files)
