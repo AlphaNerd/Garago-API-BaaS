@@ -32,7 +32,7 @@ var api = new ParseServer({
   serverURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
   publicServerURL: process.env.SERVER_URL,  // Don't forget to change to https if needed
   allowClientClassCreation: false,
-  verifyUserEmails: true,
+  // verifyUserEmails: true,
   appName: 'GaragoAPI',
   liveQuery: {
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
