@@ -170,32 +170,42 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
     if (request.user) {
         var query = new Parse.Query(Files)
         var fileID = request.params.fileID
-        var user = request.user.id
         query.equalTo("objectId",fileID)
-        query.include("users_favorite")
         ///// Find Object to set as user favorite
         query.find()
             .then(function (results) {
                 console.log("RESULTS Finding File: ",results[0].attributes)
-                if(results[0].id){
-                    var obj = results[0]
-                    var users = obj.get("users_favorite") || []
-                    users.push(user)
-                    results[0].set("users_favorite", users)
-                    console.log("USERS: ",users)
-                    results[0].save({
-                        success: function(res){
-                            console.log("SAVED AS FAVORITE: ",res)
-                            response.success(res);
-                        },
-                        error: function(e,r){
-                            console.warn("ERROR SAVING FAV: ",e,r)
-                            response.error(e);
-                        }
-                    })
-                }else{
-                    response.success("Can't find this file!");
-                }
+                var relation = request.user.relation("favorite_files")
+                realation.add(results[0])
+                request.user.save({
+                    success: function(res){
+                        console.log(res)
+                        response.success(results)
+                    },
+                    error: function(e,r){
+                        console.log(e,r)
+                        response.error(e,r)
+                    }
+                })
+                // if(results[0].id){
+                //     var obj = results[0]
+                //     var users = obj.get("users_favorite") || []
+                //     users.push(user)
+                //     results[0].set("users_favorite", users)
+                //     console.log("USERS: ",users)
+                //     results[0].save({
+                //         success: function(res){
+                //             console.log("SAVED AS FAVORITE: ",res)
+                //             response.success(res);
+                //         },
+                //         error: function(e,r){
+                //             console.warn("ERROR SAVING FAV: ",e,r)
+                //             response.error(e);
+                //         }
+                //     })
+                // }else{
+                //     response.success("Can't find this file!");
+                // }
             })
             .catch(function (e) {
                 response.error(e);
