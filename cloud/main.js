@@ -176,7 +176,7 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
             .then(function (results) {
                 console.log("RESULTS Finding File: ",results[0].attributes)
                 var relation = request.user.relation("favorite_files")
-                realation.add(results[0])
+                relation.add(results[0])
                 request.user.save({
                     success: function(res){
                         console.log(res)
