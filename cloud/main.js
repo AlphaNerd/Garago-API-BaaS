@@ -151,7 +151,7 @@ Parse.Cloud.define("getUserFavFiles", function (request, response) {
                     for(i=0;i<files.length;i++){
                         var file = files[i].attributes
                         file.id = files[i].id
-                        file.createdByUser = files[i].get("createdByUser").get("username")
+                        file.createdByUser = files[i].get("createdByUser")
                         obj.push(file)
                     }
                     console.log("FAVORITE FILES FOUND: ",files)
