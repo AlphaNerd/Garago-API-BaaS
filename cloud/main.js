@@ -185,7 +185,9 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
                     error: function(e,r){
                         console.log(e,r)
                         response.error(e,r)
-                    }
+                    },
+                },{
+                    useMasterKey: true
                 })
                 // if(results[0].id){
                 //     var obj = results[0]
