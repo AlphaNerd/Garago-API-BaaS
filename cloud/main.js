@@ -140,33 +140,13 @@ Parse.Cloud.define("getUsersByIDs", function (request, response) {
 Parse.Cloud.define("getUserFavFiles", function (request, response) {
     if (request.user) {
         var query = new Parse.Query(Files)
-        var fileID = request.params.fileID
-        var user = request.user.id
-        query.contains("users_favorite",fileID)
-        // query.include("users_favorite")
+        var fileIDs = request.user.get("favorite_files")
+        query.contains("objectId",fileIDs)
         ///// Find Object to set as user favorite
         query.find()
             .then(function (results) {
-                console.log("RESULTS Finding File: ",results[0].attributes)
-                if(results[0].id){
-                    var obj = results[0]
-                    var users = obj.get("users_favorite") || []
-                    users.push(user)
-                    results[0].set("users_favorite", users)
-                    console.log("USERS: ",users)
-                    results[0].save({
-                        success: function(res){
-                            console.log("SAVED AS FAVORITE: ",res)
-                            response.success(res);
-                        },
-                        error: function(e,r){
-                            console.warn("ERROR SAVING FAV: ",e,r)
-                            response.error(e);
-                        }
-                    })
-                }else{
-                    response.success("Can't find this file!");
-                }
+                console.log("RESULTS Finding Favorite File: ",results)
+                response.success(results)
             })
             .catch(function (e) {
                 response.error(e);
