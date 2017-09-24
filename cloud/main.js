@@ -205,7 +205,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     if(request.user){
         var userObj = request.user.attributes
         userObj.id = request.user.id
-        request.object.set("createdByUser",request.user.id)
+        request.object.set("createdByUser",request.user)
         request.object.set("createdBy",userObj)
     }else{
         // request.object.set("createdBy","ROGIfaTamg")
