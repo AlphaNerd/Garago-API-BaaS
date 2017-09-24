@@ -1,3 +1,5 @@
+Parse.Cloud.useMasterKey()
+
 var ColorScheme = require('color-scheme');
 
 var ActionPlan = Parse.Object.extend("ActionPlans");
