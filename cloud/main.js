@@ -206,7 +206,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
         var userObj = {
             id: request.user.id,
             name: {
-                first: request.user.attributes.firstname
+                first: request.user.attributes.firstname,
                 last: request.user.attributes.lastname,
                 username: request.user.attributes.user
             },
