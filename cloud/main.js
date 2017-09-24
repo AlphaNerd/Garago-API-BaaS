@@ -142,7 +142,7 @@ Parse.Cloud.define("getUserFavFiles", function (request, response) {
         var query = new Parse.Query(Files)
         var fileID = request.params.fileID
         var user = request.user.id
-        query.containedIn("users_favorite",fileID)
+        query.contains("users_favorite",fileID)
         // query.include("users_favorite")
         ///// Find Object to set as user favorite
         query.find()
