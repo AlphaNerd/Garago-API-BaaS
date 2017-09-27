@@ -198,7 +198,7 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
     var title = request.object.get("file")._name.split("_")
-    request.object.set("title",title[1].toLowerCase())
+    request.object.set("title",title[1])
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type[type.length-1])
     request.object.set("active",true)
