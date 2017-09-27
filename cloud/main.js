@@ -140,33 +140,14 @@ Parse.Cloud.define("getUsersByIDs", function (request, response) {
 Parse.Cloud.define("getUserFavFiles", function (request, response) {
     if (request.user) {
         var query = new Parse.Query(Files)
-        var fileID = request.params.fileID
-        var user = request.user.id
-        query.containedIn("users_favorite",fileID)
-        // query.include("users_favorite")
+        var fileIDs = request.user.get("favorite_files")
+        console.log("SEARCH FOR THESE FILES: ",fileIDs)
+        query.containedIn("objectId",fileIDs)
         ///// Find Object to set as user favorite
         query.find()
             .then(function (results) {
-                console.log("RESULTS Finding File: ",results[0].attributes)
-                if(results[0].id){
-                    var obj = results[0]
-                    var users = obj.get("users_favorite") || []
-                    users.push(user)
-                    results[0].set("users_favorite", users)
-                    console.log("USERS: ",users)
-                    results[0].save({
-                        success: function(res){
-                            console.log("SAVED AS FAVORITE: ",res)
-                            response.success(res);
-                        },
-                        error: function(e,r){
-                            console.warn("ERROR SAVING FAV: ",e,r)
-                            response.error(e);
-                        }
-                    })
-                }else{
-                    response.success("Can't find this file!");
-                }
+                console.log("RESULTS Finding Favorite File: ",results)
+                response.success(results)
             })
             .catch(function (e) {
                 response.error(e);
@@ -217,13 +198,24 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
 
 Parse.Cloud.beforeSave("Files", function (request, response) {
     var title = request.object.get("file")._name.split("_")
-    request.object.set("title",title[1])
+    request.object.set("title",title[1].toLowerCase())
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type[type.length-1])
     request.object.set("active",true)
 
     if(request.user){
+        var userObj = {
+            id: request.user.id,
+            name: {
+                first: request.user.attributes.firstname,
+                last: request.user.attributes.lastname,
+                username: request.user.attributes.user
+            },
+            email: request.user.attributes.email,
+            image: request.user.attributes.image
+        }
         request.object.set("createdByUser",request.user)
+        request.object.set("createdBy",userObj)
     }else{
         // request.object.set("createdBy","ROGIfaTamg")
     }
@@ -236,9 +228,12 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
             request.object.set("icon","fa-file-pdf-o")
         }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
             request.object.set("icon","fa-file-text-o")
-        }else if(type[type.length-1] == "pptx"){
+        }else if(type[type.length-1] == "pptx" || type[type.length-1] == "ppt"){
             request.object.set("icon","fa-file-powerpoint-o")
+        }else if(type[type.length-1] == "xlsx" || type[type.length-1] == "xls"){
+            request.object.set("icon","fa-file-excel-o")
         }
+
     }
     catch(e){
         console.log(e)
