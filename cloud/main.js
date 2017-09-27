@@ -236,6 +236,8 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
             request.object.set("icon","fa-file-pdf-o")
         }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
             request.object.set("icon","fa-file-text-o")
+        }else if(type[type.length-1] == "pptx"){
+            request.object.set("icon","fa-file-powerpoint-o")
         }
     }
     catch(e){
