@@ -8,6 +8,33 @@ var Activities = Parse.Object.extend("Activities");
 var Users = Parse.Object.extend("User");
 var Files = Parse.Object.extend("Files");
 
+Parse.Cloud.define("validateBetaUser", function (request, response) {
+    var betaUsers = [
+        "Ashley.Counsell@gnb.ca",
+        "Vivienne.Sprague@gnb.ca",
+        "Kim.Moyer@gnb.ca",
+        "Kylah.Maher@gnb.ca",
+        "Linda.Hache2@gnb.ca",
+        "Emilie.Lebel@gnb.ca",
+        "Luc.Ringuette@gnb.ca",
+        "Nicole.ArsenaultLeBlanc@gnb.ca"
+    ]
+
+    function checkBetaEmail(){
+        betaUsers.indexof(request.params.email.toLowerCase())
+        if(betaUsers.indexof(request.params.email.toLowerCase()) != -1){
+            return true
+        }else{
+            return false
+        }
+    }
+
+    if(checkBetaEmail){
+        response.success(true)
+    }
+
+})
+
 Parse.Cloud.define("createNewActionPlan", function (request, response) {
     if (request.user) {
         var plan = new ActionPlan();
