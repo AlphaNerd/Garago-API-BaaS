@@ -17,6 +17,7 @@
     "parse-server": "*",
     "parse-server-amazon-ses-adapter": "^1.0.0",
     "parse-server-fs-adapter": "^1.0.1",
+    "parse-server-mailgun": "^2.4.6",
     "parse-server-s3-adapter": "^1.2.0"
   },
   "scripts": {
