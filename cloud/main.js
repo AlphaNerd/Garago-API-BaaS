@@ -201,7 +201,6 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     request.object.set("title",title[1])
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type[type.length-1])
-    request.object.set("active",request.object.get("active") || true)
 
     if(request.user){
         var userObj = {
