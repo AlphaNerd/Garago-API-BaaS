@@ -10,14 +10,14 @@ var Files = Parse.Object.extend("Files");
 
 Parse.Cloud.define("validateBetaUser", function (request, response) {
     var betaUsers = [
-        "Ashley.Counsell@gnb.ca",
-        "Vivienne.Sprague@gnb.ca",
-        "Kim.Moyer@gnb.ca",
-        "Kylah.Maher@gnb.ca",
-        "Linda.Hache2@gnb.ca",
-        "Emilie.Lebel@gnb.ca",
-        "Luc.Ringuette@gnb.ca",
-        "Nicole.ArsenaultLeBlanc@gnb.ca"
+        "ashley.counsell@gnb.ca",
+        "vivienne.sprague@gnb.ca",
+        "kim.moyer@gnb.ca",
+        "kylah.maher@gnb.ca",
+        "linda.hache2@gnb.ca",
+        "emilie.lebel@gnb.ca",
+        "luc.ringuette@gnb.ca",
+        "nicole.arsenaultleblanc@gnb.ca"
     ]
 
     function checkBetaEmail(){
