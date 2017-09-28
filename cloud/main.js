@@ -22,7 +22,7 @@ Parse.Cloud.define("validateBetaUser", function (request, response) {
 
     function checkBetaEmail(){
         console.log("VERIFY BETA USER")
-        if(betaUsers.indexof(request.params.email) != -1){
+        if(betaUsers.indexOf(request.params.email) != -1){
             return true
         }else{
             return false
