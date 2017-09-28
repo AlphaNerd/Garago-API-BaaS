@@ -32,7 +32,7 @@ Parse.Cloud.define("validateBetaUser", function (request, response) {
     if(checkBetaEmail()){
         response.success(true)
     }else{
-        response.error(false)
+        response.success(false)
     }
 
 })
