@@ -234,7 +234,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     ////check for duplicate names
     var query = new Parse.Query(Files)
     console.log("SEARCH FOR THIS FILE: ",request.object.get("file"))
-    query.equalTo("title",request.object.get("file")._name)
+    query.equalTo("title",request.object.get("file")._name.toLowerCase())
     ///// Find Object to set as user favorite
     query.find()
         .then(function (results) {
