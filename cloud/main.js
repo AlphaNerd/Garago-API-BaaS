@@ -230,6 +230,24 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     title = title.replace("_","#@#")
     var newTitle = title.split("#@#")
     request.object.set("title",newTitle[1].toLowerCase())
+
+    ////check for duplicate names
+    var query = new Parse.Query(Files)
+    console.log("SEARCH FOR THIS FILE: ",request.object.get("file"))
+    query.equalTo("title",request.object.get("file")._name)
+    ///// Find Object to set as user favorite
+    query.find()
+        .then(function (results) {
+            console.log("RESULTS Finding File: ",results)
+            if(results[0]){
+                request.object.set("title",newTitle[1].toLowerCase()+"(1)")
+            }
+        })
+        .catch(function (e) {
+            response.error(e);
+        });
+
+
     var type = request.object.get("file")._name.split(".")
     request.object.set("type",type[type.length-1])
 
