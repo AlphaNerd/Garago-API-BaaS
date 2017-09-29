@@ -39,18 +39,40 @@ var api = new ParseServer({
   },
   filesAdapter: s3Adapter,
   emailAdapter: {
-    module: 'parse-server-mailgun-adapter',
-    options: {
-      fromAddress: 'info@rytechdigital.ca',
-      domain: 'mailgun.rytechdigital.ca',
-      apiKey: 'key-0e851de87a4c4eabcd88f860643099e1',
-      params: {}, // Whatever params you want to pass to the template
-
-      // This is the template. You get {{url}} by default, but any params
-      // added above is also available inside the template
-      html: '<div><h1>Welcome to Garago!</h1><b>Confirm your email by clicking <a href="{{url}}">here</a></div>'
-    }
-  },
+      module: "parse-server-amazon-ses-adapter",
+      options: {
+        from: "Garago <noreply@garago.net>",
+        accessKeyId: "AKIAIBFVQAAG4YFG2QMA",
+        secretAccessKey: "VZSA00HwAIbOwhC9xW/A/iaeHGsq0oOzEJsXhL+J",
+        region: "ca-central-1",
+        templates: {
+          passwordResetEmail: {
+            subject: 'Reset your password',
+            pathHtml: __dirname + '/public/email_templates/password_reset_email.html',
+            callback: (user) => {
+                return {
+                  firstName: user.get('firstName')
+                }
+              }
+              // Now you can use {{firstName}} in your templates
+          },
+          verificationEmail: {
+            subject: 'Confirm your account',
+            pathHtml: __dirname + '/public/email_templates/verification_email.html',
+            callback: (user) => {
+                return {
+                  firstName: user.get('firstName')
+                }
+              }
+              // Now you can use {{firstName}} in your templates
+          },
+          customEmailAlert: {
+            subject: 'Urgent notification!',
+            pathHtml: __dirname + '/public/email_templates/custom_alert.html',
+          }
+        }
+      }
+   }
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
