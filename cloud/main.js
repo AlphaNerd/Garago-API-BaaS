@@ -242,9 +242,9 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
             if(results[0]){
                 var newTitle = newTitle[1].toLowerCase()+"(1)"
                 request.object.set("title",newTitle[1].toLowerCase()+"(1)")
-                finishSave()
+                finishSave();
             }else{
-                finishSave()
+                finishSave();
             }
         })
         .catch(function (e) {
