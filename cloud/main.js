@@ -238,8 +238,8 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
         .then(function (results) {
             console.log("RESULTS Finding File: ",results)
             if(results[0]){
-                newTitle[1] = newTitle[1].replace(/.([^.]*)$/,'(1).'+'$1');
-                request.object.set("title",newTitle[1].toLowerCase())
+                var myTitle = newTitle[1].replace(/.([^.]*)$/,'(1).'+'$1');
+                request.object.set("title",myTitle.toLowerCase())
                 finishSave()
             }else{
                 finishSave()
@@ -251,9 +251,6 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
 
 
     function finishSave(){
-        var title = request.object.get("file")._name
-        title = title.replace("_","#@#")
-        var newTitle = title.split("#@#")
         request.object.set("title",newTitle[1].toLowerCase())
         var type = request.object.get("file")._name.split(".")
         request.object.set("type",type[type.length-1])
