@@ -242,6 +242,9 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
             if(results[0]){
                 var myTitle = newTitle[1].toLowerCase()+"(1)"
                 request.object.set("title",myTitle)
+                finishSave()
+            }else{
+                finishSave()
             }
         })
         .catch(function (e) {
@@ -249,46 +252,48 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
         });
 
 
-    var type = request.object.get("file")._name.split(".")
-    request.object.set("type",type[type.length-1])
+    function finishSave(){
+        var type = request.object.get("file")._name.split(".")
+        request.object.set("type",type[type.length-1])
 
-    if(request.user){
-        var userObj = {
-            id: request.user.id,
-            name: {
-                first: request.user.attributes.firstname,
-                last: request.user.attributes.lastname,
-                username: request.user.attributes.user
-            },
-            email: request.user.attributes.email,
-            image: request.user.attributes.image
-        }
-        request.object.set("createdByUser",request.user)
-        request.object.set("createdBy",userObj)
-    }else{
-        // request.object.set("createdBy","ROGIfaTamg")
-    }
-
-    try{
-        /// set icons
-        if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
-            request.object.set("icon","fa-file-image-o")
-        }else if(type[type.length-1] == "pdf"){
-            request.object.set("icon","fa-file-pdf-o")
-        }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
-            request.object.set("icon","fa-file-text-o")
-        }else if(type[type.length-1] == "pptx" || type[type.length-1] == "ppt"){
-            request.object.set("icon","fa-file-powerpoint-o")
-        }else if(type[type.length-1] == "xlsx" || type[type.length-1] == "xls"){
-            request.object.set("icon","fa-file-excel-o")
+        if(request.user){
+            var userObj = {
+                id: request.user.id,
+                name: {
+                    first: request.user.attributes.firstname,
+                    last: request.user.attributes.lastname,
+                    username: request.user.attributes.user
+                },
+                email: request.user.attributes.email,
+                image: request.user.attributes.image
+            }
+            request.object.set("createdByUser",request.user)
+            request.object.set("createdBy",userObj)
+        }else{
+            // request.object.set("createdBy","ROGIfaTamg")
         }
 
-    }
-    catch(e){
-        console.log(e)
-    }
+        try{
+            /// set icons
+            if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
+                request.object.set("icon","fa-file-image-o")
+            }else if(type[type.length-1] == "pdf"){
+                request.object.set("icon","fa-file-pdf-o")
+            }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
+                request.object.set("icon","fa-file-text-o")
+            }else if(type[type.length-1] == "pptx" || type[type.length-1] == "ppt"){
+                request.object.set("icon","fa-file-powerpoint-o")
+            }else if(type[type.length-1] == "xlsx" || type[type.length-1] == "xls"){
+                request.object.set("icon","fa-file-excel-o")
+            }
 
-    response.success()
+        }
+        catch(e){
+            console.log(e)
+        }
+
+        response.success()
+    }
 });
 
 Parse.Cloud.afterSave("ActionPlans", function (request, response) {
