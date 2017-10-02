@@ -228,6 +228,9 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
 Parse.Cloud.beforeSave("Files", function (request, response) {
     ////check for duplicate names
     var query = new Parse.Query(Files)
+    var title = request.object.get("file")._name
+    title = title.replace("_","#@#")
+    var newTitle = title.split("#@#")
     console.log("SEARCH FOR THIS FILENAME: ",newTitle[1].toLowerCase())
     query.equalTo("title",newTitle[1].toLowerCase())
     ///// Find Object to set as user favorite
@@ -235,9 +238,6 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
         .then(function (results) {
             console.log("RESULTS Finding File: ",results)
             if(results[0]){
-                var title = request.object.get("file")._name
-                title = title.replace("_","#@#")
-                var newTitle = title.split("#@#")
                 newTitle[1] = newTitle[1].replace(/.([^.]*)$/,'(1).'+'$1');
                 request.object.set("title",newTitle[1].toLowerCase())
                 finishSave()
