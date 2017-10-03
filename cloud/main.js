@@ -4,6 +4,7 @@ var Project = Parse.Object.extend("Projects");
 var Activities = Parse.Object.extend("Activities");
 var Users = Parse.Object.extend("User");
 var Files = Parse.Object.extend("Files");
+var Invites = Parse.Object.extend("Invites");
 
 Parse.Cloud.define("validateBetaUser", function (request, response) {
     var betaUsers = [
@@ -300,6 +301,48 @@ Parse.Cloud.afterSave("ActionPlans", function (request, response) {
     }
 });
 
+///////////////////////////////////////////////////////
+/////////// INVITE USERS TO APP ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("inviteUser", function (request, response) {
+    var email = request.params.email
+    var canUpload = request.params.canUpload
+    var invite = new Invites();
+
+    ///// Set User ACL Privelages
+    var acl = new Parse.ACL();
+    acl.setPublicReadAccess(false);
+    acl.setPublicWriteAccess(false);
+    acl.setReadAccess(request.user.id, true);
+    acl.setWriteAccess(request.user.id, true);
+    invite.setACL(acl);
+
+    ///// Set object properties for new Action project
+    invite.set("email", request.params.email)
+    invite.set("canUpload", request.params.canUpload)
+
+    ///// Save to MongoDB
+    invite.save()
+        .then(function (results) {
+            console.log(results)
+
+
+            /////// ***** Send Email to User Here ***** ///////
+
+            response.success(results);
+        })
+        .catch(function (e) {
+            response.error(e);
+        });
+})
+
+///////////////////////////////////////////////////////
+/////////// INVITE USERS TO APP ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("getNocCodes", function (request, response) {
+    response.success(NOC_CODES)
+})
+
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -364,14 +407,6 @@ var rows = [{
         locked: false
     }]
 }]
-
-Parse.Cloud.define("inviteUser", function (request, response) {
-    response.success("user invited")
-})
-
-Parse.Cloud.define("getNocCodes", function (request, response) {
-    response.success(NOC_CODES)
-})
 
 var NOC_CODES = [
   {
