@@ -365,6 +365,10 @@ var rows = [{
     }]
 }]
 
+Parse.Cloud.define("inviteUser", function (request, response) {
+    response.success("user invited")
+})
+
 Parse.Cloud.define("getNocCodes", function (request, response) {
     response.success(NOC_CODES)
 })
