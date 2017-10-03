@@ -326,7 +326,6 @@ Parse.Cloud.define("inviteUser", function (request, response) {
         .then(function (results) {
             console.log(results)
 
-
             /////// ***** Send Email to User Here ***** ///////
 
             response.success(results);
