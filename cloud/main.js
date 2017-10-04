@@ -311,14 +311,13 @@ Parse.Cloud.define("inviteUser", function (request, response) {
 
     ///// Set User ACL Privelages
     var acl = new Parse.ACL();
-    acl.setPublicReadAccess(false);
+    acl.setPublicReadAccess(true);
     acl.setPublicWriteAccess(false);
-    acl.setReadAccess(request.user.id, true);
     acl.setWriteAccess(request.user.id, true);
     invite.setACL(acl);
 
     ///// Set object properties for new Action project
-    invite.set("email", request.params.email)
+    invite.set("email", request.params.email.toLowerCase())
     invite.set("canUpload", request.params.canUpload)
 
     ///// Save to MongoDB
