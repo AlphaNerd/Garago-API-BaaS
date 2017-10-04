@@ -5,6 +5,7 @@ var Activities = Parse.Object.extend("Activities");
 var Users = Parse.Object.extend("User");
 var Files = Parse.Object.extend("Files");
 var Invites = Parse.Object.extend("Invites");
+var Users = Parse.Object.extend("Users");
 
 Parse.Cloud.define("validateBetaUser", function (request, response) {
     var betaUsers = [
@@ -332,6 +333,17 @@ Parse.Cloud.define("inviteUser", function (request, response) {
         .catch(function (e) {
             response.error(e);
         });
+})
+
+///////////////////////////////////////////////////////
+/////////// MANAGE USERS IN APP ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("getAllUsers", function (request, response) {
+    var query = new Parse.Query(Users)
+    query.exists("objectId")
+    query.find().then(function(res){
+        response.success(res)
+    })
 })
 
 ///////////////////////////////////////////////////////
