@@ -311,6 +311,7 @@ Parse.Cloud.define("removeInvite", function (request, response) {
     query.find({
         success: function(resp){
             function success(res){
+                console.log("FOUND INVITE: ",res)
                 response.success(res)
             }
             res[0].set("active",false)
