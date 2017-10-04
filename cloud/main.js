@@ -5,7 +5,7 @@ var Activities = Parse.Object.extend("Activities");
 var Users = Parse.Object.extend("User");
 var Files = Parse.Object.extend("Files");
 var Invites = Parse.Object.extend("Invites");
-var Users = Parse.Object.extend("Users");
+var Users = Parse.Object.extend("User");
 
 Parse.Cloud.define("validateBetaUser", function (request, response) {
     var betaUsers = [
