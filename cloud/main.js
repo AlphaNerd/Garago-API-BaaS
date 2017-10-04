@@ -310,10 +310,11 @@ Parse.Cloud.define("removeInvite", function (request, response) {
     query.equalTo("email",request.params.email)
     query.find({
         success: function(resp){
-            res[0].set("active",false)
-            res[0].save().then(function(res){
+            function success(res){
                 response.success(res)
-            })
+            }
+            res[0].set("active",false)
+            res[0].save().then(success)
         },
         error: function(e,r){
             console.log(e,r)
