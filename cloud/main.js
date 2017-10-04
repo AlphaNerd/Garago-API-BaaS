@@ -306,6 +306,25 @@ Parse.Cloud.afterSave("ActionPlans", function (request, response) {
 /////////// INVITE USERS TO APP ///////////////////
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("inviteUser", function (request, response) {
+    var query = new Parse.Query(Invites)
+    query.equalTo("email",request.params.email)
+    query.find({
+        success: function(resp){
+            res[0].set("active",false)
+            res[0].save().then(function(res){
+                response.success(res)
+            })
+        },
+        error: function(e,r){
+            console.log(e,r)
+        }
+    })
+})
+
+///////////////////////////////////////////////////////
+/////////// DEACTIVATE USER INVITE ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("removeInvite", function (request, response) {
     var email = request.params.email
     var canUpload = request.params.canUpload || false
     var invite = new Invites();
