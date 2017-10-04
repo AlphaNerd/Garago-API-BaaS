@@ -306,7 +306,7 @@ Parse.Cloud.afterSave("ActionPlans", function (request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("inviteUser", function (request, response) {
     var email = request.params.email
-    var canUpload = request.params.canUpload
+    var canUpload = request.params.canUpload || false
     var invite = new Invites();
 
     ///// Set User ACL Privelages
