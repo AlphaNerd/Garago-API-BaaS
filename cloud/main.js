@@ -313,8 +313,8 @@ Parse.Cloud.define("inviteUser", function (request, response) {
     ///// Set User ACL Privelages
     var acl = new Parse.ACL();
     acl.setPublicReadAccess(true);
-    acl.setPublicWriteAccess(false);
-    acl.setWriteAccess(request.user.id, true);
+    acl.setPublicWriteAccess(true);
+    // acl.setWriteAccess(request.user.id, true);
     invite.setACL(acl);
 
     ///// Set object properties for new Action project
