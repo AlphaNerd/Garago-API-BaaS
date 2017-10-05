@@ -382,9 +382,10 @@ Parse.Cloud.define("getNocCodes", function (request, response) {
 
     var mainQuery = Parse.Query.or(query1, query2);
     mainQuery.descending("createdAt")
+    mainQuery.limit(25)
     mainQuery.find({
       success: function(res) {
-        console.log("Found NOC Codes: ", res)
+        console.log("Found NOC Codes: ", res[0].attributes)
         var objects = []
         for(i=0;i<res.length;i++){
             var item = {
