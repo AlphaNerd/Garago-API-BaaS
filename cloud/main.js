@@ -378,7 +378,7 @@ Parse.Cloud.define("getNocCodes", function (request, response) {
     query1.contains("title", searchTerm)
 
     var query2 = new Parse.Query(NocCodes)
-    query2.equalTo("code", searchTerm)
+    query2.contains("noc", searchTerm)
 
     var mainQuery = Parse.Query.or(query1, query2);
     mainQuery.descending("createdAt")
