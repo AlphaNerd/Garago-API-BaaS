@@ -374,6 +374,7 @@ Parse.Cloud.define("getAllUsers", function (request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("getNocCodes", function (request, response) {
     var query1 = new Parse.Query(NocCodes)
+    var searchTerm = request.params.searchTerm
     query1.equalTo("title", searchTerm)
 
     var query2 = new Parse.Query(NocCodes)
