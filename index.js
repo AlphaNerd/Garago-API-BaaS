@@ -46,7 +46,7 @@ var api = new ParseServer({
         // The address that your emails come from
         fromAddress: 'info@rytechdigital.ca',
         // Your domain from mailgun.com
-        domain: 'rytechdigital.ca',
+        domain: 'mailgun.rytechdigital.ca',
         // Your API key from mailgun.com
         apiKey: 'key-0e851de87a4c4eabcd88f860643099e1',
         // The template section
