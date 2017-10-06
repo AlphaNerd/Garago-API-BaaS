@@ -367,7 +367,7 @@ Parse.Cloud.define("inviteUser", function (request, response) {
               // Additional message fields can be included with the "extra" option
               // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
               extra: {
-                attachments: [/* include attachment objects */]
+                attachments: [/* include attachment objects */],
                 replyTo: 'colemanjeff@mac.com'
               }
             });
