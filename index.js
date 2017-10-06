@@ -39,12 +39,15 @@ var api = new ParseServer({
   },
   filesAdapter: s3Adapter,
   emailAdapter: {
-      module: "parse-server-amazon-ses-adapter",
+      module: 'parse-server-mailgun',
       options: {
-        from: "Garago <noreply@garago.net>",
-        accessKeyId: "AKIAIBFVQAAG4YFG2QMA",
-        secretAccessKey: "VZSA00HwAIbOwhC9xW/A/iaeHGsq0oOzEJsXhL+J",
-        region: "ca-central-1",
+        // The address that your emails come from
+        fromAddress: 'info@rytechdigital.ca',
+        // Your domain from mailgun.com
+        domain: 'rytechdigital.ca',
+        // Your API key from mailgun.com
+        apiKey: 'key-0e851de87a4c4eabcd88f860643099e1',
+        // The template section
         templates: {
           passwordResetEmail: {
             subject: 'Reset your password',
