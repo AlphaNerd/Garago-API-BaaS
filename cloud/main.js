@@ -363,7 +363,7 @@ Parse.Cloud.define("inviteUser", function (request, response) {
               // Optional override of the adapter's fromAddress
               fromAddress: 'info@rytechdigital.ca',
               recipient: email,
-              variables: { alert: 'New posts' } // {{alert}} will be compiled to 'New posts'
+              variables: { alert: 'New posts' }, // {{alert}} will be compiled to 'New posts'
               // Additional message fields can be included with the "extra" option
               // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
               extra: {

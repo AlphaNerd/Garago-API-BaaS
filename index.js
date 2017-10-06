@@ -66,9 +66,9 @@ var api = new ParseServer({
             // Now you can use {{firstName}} in your templates
           },
           userInvite: {
-            subject: 'Urgent notification!',
-            pathPlainText: resolve(__dirname, 'path/to/templates/custom_alert.txt'),
-            pathHtml: resolve(__dirname, 'path/to/templates/custom_alert.html'),
+            subject: 'You\'re invited to Garago Smart Library',
+            pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html'),
           }
         }
       }
