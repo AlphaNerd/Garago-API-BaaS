@@ -44,9 +44,9 @@ var api = new ParseServer({
       // The address that your emails come from
       fromAddress: 'YourApp <noreply@yourapp.com>',
       // Your domain from mailgun.com
-      domain: 'example.com',
+      domain: 'rytechdigital.ca',
       // Your API key from mailgun.com
-      apiKey: 'key-mykey',
+      apiKey: 'key-0e851de87a4c4eabcd88f860643099e1',
       // The template section
       templates: {
         passwordResetEmail: {
