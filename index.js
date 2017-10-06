@@ -4,6 +4,7 @@
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
+var fs = require('fs');
 
 var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
