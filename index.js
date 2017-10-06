@@ -5,6 +5,7 @@ var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
 var fs = require('fs');
+const resolve = require('path').resolve;
 
 var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
@@ -52,27 +53,22 @@ var api = new ParseServer({
         templates: {
           passwordResetEmail: {
             subject: 'Reset your password',
-            pathHtml: __dirname + '/public/email_templates/password_reset_email.html',
-            callback: (user) => {
-                return {
-                  firstName: user.get('firstName')
-                }
-              }
-              // Now you can use {{firstName}} in your templates
+            pathPlainText: resolve(__dirname, 'path/to/templates/password_reset_email.txt'),
+            pathHtml: resolve(__dirname, 'path/to/templates/password_reset_email.html'),
+            callback: (user) => { return { firstName: user.get('firstName') }}
+            // Now you can use {{firstName}} in your templates
           },
           verificationEmail: {
             subject: 'Confirm your account',
-            pathHtml: __dirname + '/public/email_templates/verification_email.html',
-            callback: (user) => {
-                return {
-                  firstName: user.get('firstName')
-                }
-              }
-              // Now you can use {{firstName}} in your templates
+            pathPlainText: resolve(__dirname, 'path/to/templates/verification_email.txt'),
+            pathHtml: resolve(__dirname, 'path/to/templates/verification_email.html'),
+            callback: (user) => { return { firstName: user.get('firstName') }}
+            // Now you can use {{firstName}} in your templates
           },
           customEmailAlert: {
             subject: 'Urgent notification!',
-            pathHtml: __dirname + '/public/email_templates/custom_alert.html',
+            pathPlainText: resolve(__dirname, 'path/to/templates/custom_alert.txt'),
+            pathHtml: resolve(__dirname, 'path/to/templates/custom_alert.html'),
           }
         }
       }
