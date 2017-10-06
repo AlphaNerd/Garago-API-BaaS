@@ -65,7 +65,7 @@ var api = new ParseServer({
             callback: (user) => { return { firstName: user.get('firstName') }}
             // Now you can use {{firstName}} in your templates
           },
-          customEmailAlert: {
+          userInvite: {
             subject: 'Urgent notification!',
             pathPlainText: resolve(__dirname, 'path/to/templates/custom_alert.txt'),
             pathHtml: resolve(__dirname, 'path/to/templates/custom_alert.html'),

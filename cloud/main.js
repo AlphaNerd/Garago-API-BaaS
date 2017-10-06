@@ -1,3 +1,9 @@
+// Get access to Parse Server's cache
+const { AppCache } = require('parse-server/lib/cache');
+// Get a reference to the MailgunAdapter
+// NOTE: It's best to do this inside the Parse.Cloud.define(...) method body and not at the top of your file with your other imports. This gives Parse Server time to boot, setup cloud code and the email adapter.
+const MailgunAdapter = AppCache.get('yourAppId').userController.adapter;
+
 var ColorScheme = require('color-scheme');
 var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
@@ -350,6 +356,21 @@ Parse.Cloud.define("inviteUser", function (request, response) {
             console.log(results)
 
             /////// ***** Send Email to User Here ***** ///////
+            MailgunAdapter.send({
+              templateName: 'userInvite',
+              // Optional override of your configuration's subject
+              subject: 'Welcome to Smart Library',
+              // Optional override of the adapter's fromAddress
+              fromAddress: 'info@rytechdigital.ca',
+              recipient: email,
+              variables: { alert: 'New posts' } // {{alert}} will be compiled to 'New posts'
+              // Additional message fields can be included with the "extra" option
+              // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+              extra: {
+                attachments: [/* include attachment objects */]
+                replyTo: 'colemanjeff@mac.com'
+              }
+            });
 
             response.success(results);
         })
