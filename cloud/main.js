@@ -381,7 +381,7 @@ Parse.Cloud.define("getNocCodes", function (request, response) {
     query2.contains("noc", searchTerm)
 
     var mainQuery = Parse.Query.or(query1, query2);
-    mainQuery.descending("createdAt")
+    mainQuery.descending("title")
     mainQuery.limit(25)
     mainQuery.find({
       success: function(res) {
