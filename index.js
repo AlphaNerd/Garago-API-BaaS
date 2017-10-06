@@ -53,8 +53,7 @@ var api = new ParseServer({
         templates: {
           passwordResetEmail: {
             subject: 'Reset your password',
-            pathPlainText: resolve(__dirname, 'path/to/templates/password_reset_email.txt'),
-            pathHtml: resolve(__dirname, 'path/to/templates/password_reset_email.html'),
+            pathHtml: resolve(__dirname, 'public/email_templates/password_reset_email.html'),
             callback: (user) => { return { firstName: user.get('firstName') }}
             // Now you can use {{firstName}} in your templates
           },
