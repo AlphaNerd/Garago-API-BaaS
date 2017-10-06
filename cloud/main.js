@@ -370,9 +370,9 @@ Parse.Cloud.define("inviteUser", function (request, response) {
                 attachments: [/* include attachment objects */],
                 replyTo: 'colemanjeff@mac.com'
               }
+            }).then(function(res){
+                response.success(results);
             });
-
-            response.success(results);
         })
         .catch(function (e) {
             response.error(e);
