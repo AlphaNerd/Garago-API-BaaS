@@ -233,7 +233,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     var newTitle = title.split("#@#")
     request.object.set("title",newTitle[1].toLowerCase())
     console.log("SEARCH FOR THIS FILENAME: ",newTitle[1].toLowerCase())
-    query.equalTo("title",newTitle[1].toLowerCase())
+    query.startsWith("title",newTitle[1].toLowerCase())
     ///// Find Object to set as user favorite
     query.find()
         .then(function (results) {
