@@ -48,7 +48,7 @@ var api = new ParseServer({
         // Your domain from mailgun.com
         domain: 'mailgun.rytechdigital.ca',
         // Your API key from mailgun.com
-        apiKey: 'key-0e851de87a4c4eabcd88f860643099e1',
+        apiKey: process.env.MAILGUN_KEY,
         // The template section
         templates: {
           passwordResetEmail: {
