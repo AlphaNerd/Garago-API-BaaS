@@ -363,8 +363,8 @@ Parse.Cloud.define("inviteUser", function(request, response) {
                 fromAddress: 'admin@garagosoftware.com',
                 recipient: email,
                 variables: {
-                    firstName: request.user.attributes.firstName,
-                    lastName: request.user.attributes.lastName,
+                    firstName: request.user.get("firstName"),
+                    lastName: request.user.get.("lastName"),
                     link: "https://dev-garago.herokuapp.com/#/register"
                 }, // {{alert}} will be compiled to 'New posts'
                 // Additional message fields can be included with the "extra" option
