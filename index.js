@@ -70,12 +70,11 @@ var api = new ParseServer({
             pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html'),
             callback: (user) => { 
-              var myUser = { 
+              return { 
                 firstName: user.get('firstName'),
                 lastName: user.get('lastName'),
                 link: "https://garago-dev.herokuapp/#/register"
               }
-              return myUser
             }
           }
         }
