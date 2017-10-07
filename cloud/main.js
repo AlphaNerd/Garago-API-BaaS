@@ -14,7 +14,7 @@ var Invites = Parse.Object.extend("Invites");
 var Users = Parse.Object.extend("User");
 var NocCodes = Parse.Object.extend("NocCodes");
 
-Parse.Cloud.define("validateBetaUser", function (request, response) {
+Parse.Cloud.define("validateBetaUser", function(request, response) {
     var betaUsers = [
         "ashley.counsell@gnb.ca",
         "vivienne.sprague@gnb.ca",
@@ -26,24 +26,24 @@ Parse.Cloud.define("validateBetaUser", function (request, response) {
         "nicole.arsenaultleblanc@gnb.ca"
     ]
 
-    function checkBetaEmail(){
+    function checkBetaEmail() {
         console.log("VERIFY BETA USER")
-        if(betaUsers.indexOf(request.params.email) != -1){
+        if (betaUsers.indexOf(request.params.email) != -1) {
             return true
-        }else{
+        } else {
             return false
         }
     }
 
-    if(checkBetaEmail()){
+    if (checkBetaEmail()) {
         response.success(true)
-    }else{
+    } else {
         response.success(false)
     }
 
 })
 
-Parse.Cloud.define("createNewActionPlan", function (request, response) {
+Parse.Cloud.define("createNewActionPlan", function(request, response) {
     if (request.user) {
         var plan = new ActionPlan();
 
@@ -81,11 +81,11 @@ Parse.Cloud.define("createNewActionPlan", function (request, response) {
 
         ///// Save to MongoDB
         plan.save()
-            .then(function (results) {
+            .then(function(results) {
                 console.log(results)
                 response.success(results);
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 response.error(e);
             });
     } else {
@@ -93,7 +93,7 @@ Parse.Cloud.define("createNewActionPlan", function (request, response) {
     }
 });
 
-Parse.Cloud.define("createNewProject", function (request, response) {
+Parse.Cloud.define("createNewProject", function(request, response) {
     if (request.user) {
         var project = new Project();
 
@@ -112,11 +112,11 @@ Parse.Cloud.define("createNewProject", function (request, response) {
 
         ///// Save to MongoDB
         project.save()
-            .then(function (results) {
+            .then(function(results) {
                 console.log(results)
                 response.success(results);
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 response.error(e);
             });
     } else {
@@ -124,7 +124,7 @@ Parse.Cloud.define("createNewProject", function (request, response) {
     }
 });
 
-Parse.Cloud.define("createNewActivity", function (request, response) {
+Parse.Cloud.define("createNewActivity", function(request, response) {
     if (request.user) {
         var activity = new Activities();
 
@@ -143,11 +143,11 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
 
         ///// Save to MongoDB
         activity.save()
-            .then(function (results) {
+            .then(function(results) {
                 console.log(results)
                 response.success(results);
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 response.error(e);
             });
     } else {
@@ -155,36 +155,36 @@ Parse.Cloud.define("createNewActivity", function (request, response) {
     }
 });
 
-Parse.Cloud.define("getUsersByIDs", function (request, response) {
+Parse.Cloud.define("getUsersByIDs", function(request, response) {
     var members = request.params.ids
     console.log("GET MEMBERS")
     const query = new Parse.Query(Users);
     query.containedIn("objectId", members);
     query.find({
-        success: function(res){
+        success: function(res) {
             console.log(res)
             response.success(res)
         },
-        error: function(e,r){
-            console.log(e,r)
-            response.error(e,r)
+        error: function(e, r) {
+            console.log(e, r)
+            response.error(e, r)
         }
     })
 });
 
-Parse.Cloud.define("getUserFavFiles", function (request, response) {
+Parse.Cloud.define("getUserFavFiles", function(request, response) {
     if (request.user) {
         var query = new Parse.Query(Files)
         var fileIDs = request.user.get("favorite_files")
-        console.log("SEARCH FOR THESE FILES: ",fileIDs)
-        query.containedIn("objectId",fileIDs)
+        console.log("SEARCH FOR THESE FILES: ", fileIDs)
+        query.containedIn("objectId", fileIDs)
         ///// Find Object to set as user favorite
         query.find()
-            .then(function (results) {
-                console.log("RESULTS Finding Favorite File: ",results)
+            .then(function(results) {
+                console.log("RESULTS Finding Favorite File: ", results)
                 response.success(results)
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 response.error(e);
             });
     } else {
@@ -192,38 +192,38 @@ Parse.Cloud.define("getUserFavFiles", function (request, response) {
     }
 });
 
-Parse.Cloud.define("addUserFavFile", function (request, response) {
+Parse.Cloud.define("addUserFavFile", function(request, response) {
     if (request.user) {
         var query = new Parse.Query(Files)
         var fileID = request.params.fileID
         var user = request.user.id
-        query.equalTo("objectId",fileID)
+        query.equalTo("objectId", fileID)
         query.include("users_favorite")
         ///// Find Object to set as user favorite
         query.find()
-            .then(function (results) {
-                console.log("RESULTS Finding File: ",results[0])
-                if(results[0].id){
+            .then(function(results) {
+                console.log("RESULTS Finding File: ", results[0])
+                if (results[0].id) {
                     var obj = results[0]
                     var users = obj.get("users_favorite") || []
                     users.push(user)
                     results[0].set("users_favorite", users)
-                    console.log("USERS: ",users)
+                    console.log("USERS: ", users)
                     results[0].save({
-                        success: function(res){
-                            console.log("SAVED AS FAVORITE: ",res)
+                        success: function(res) {
+                            console.log("SAVED AS FAVORITE: ", res)
                             response.success(res);
                         },
-                        error: function(e,r){
-                            console.warn("ERROR SAVING FAV: ",e,r)
+                        error: function(e, r) {
+                            console.warn("ERROR SAVING FAV: ", e, r)
                             response.error(e);
                         }
                     })
-                }else{
+                } else {
                     response.success("Can't find this file!");
                 }
             })
-            .catch(function (e) {
+            .catch(function(e) {
                 response.error(e);
             });
     } else {
@@ -231,37 +231,37 @@ Parse.Cloud.define("addUserFavFile", function (request, response) {
     }
 });
 
-Parse.Cloud.beforeSave("Files", function (request, response) {
+Parse.Cloud.beforeSave("Files", function(request, response) {
     ////check for duplicate names
     var query = new Parse.Query(Files)
     var title = request.object.get("file")._name
-    title = title.replace("_","#@#")
+    title = title.replace("_", "#@#")
     var newTitle = title.split("#@#")
-    request.object.set("title",newTitle[1].toLowerCase())
-    console.log("SEARCH FOR THIS FILENAME: ",newTitle[1].toLowerCase())
-    query.startsWith("title",newTitle[1].toLowerCase())
+    request.object.set("title", newTitle[1].toLowerCase())
+    console.log("SEARCH FOR THIS FILENAME: ", newTitle[1].toLowerCase())
+    query.startsWith("title", newTitle[1].toLowerCase())
     ///// Find Object to set as user favorite
     query.find()
-        .then(function (results) {
-            console.log("RESULTS Finding File: ",results)
-            if(results[0]){
-                var myTitle = newTitle[1].replace(/.([^.]*)$/,'('+(results.length+1)+').'+'$1');
-                request.object.set("title",myTitle.toLowerCase())
+        .then(function(results) {
+            console.log("RESULTS Finding File: ", results)
+            if (results[0]) {
+                var myTitle = newTitle[1].replace(/.([^.]*)$/, '(' + (results.length + 1) + ').' + '$1');
+                request.object.set("title", myTitle.toLowerCase())
                 finishSave()
-            }else{
+            } else {
                 finishSave()
             }
         })
-        .catch(function (e) {
+        .catch(function(e) {
             response.error(e);
         });
 
 
-    function finishSave(){
+    function finishSave() {
         var type = request.object.get("file")._name.split(".")
-        request.object.set("type",type[type.length-1])
+        request.object.set("type", type[type.length - 1])
 
-        if(request.user){
+        if (request.user) {
             var userObj = {
                 id: request.user.id,
                 name: {
@@ -272,28 +272,27 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
                 email: request.user.attributes.email,
                 image: request.user.attributes.image
             }
-            request.object.set("createdByUser",request.user)
-            request.object.set("createdBy",userObj)
-        }else{
+            request.object.set("createdByUser", request.user)
+            request.object.set("createdBy", userObj)
+        } else {
             // request.object.set("createdBy","ROGIfaTamg")
         }
 
-        try{
+        try {
             /// set icons
-            if(type[type.length-1] == "png" || type[type.length-1] == "jpg" || type[type.length-1] == "jpeg" || type[type.length-1] == "gif"){
-                request.object.set("icon","fa-file-image-o")
-            }else if(type[type.length-1] == "pdf"){
-                request.object.set("icon","fa-file-pdf-o")
-            }else if(type[type.length-1] == "doc" || type[type.length-1] == "docx" || type[type.length-1] == "txt"){
-                request.object.set("icon","fa-file-text-o")
-            }else if(type[type.length-1] == "pptx" || type[type.length-1] == "ppt"){
-                request.object.set("icon","fa-file-powerpoint-o")
-            }else if(type[type.length-1] == "xlsx" || type[type.length-1] == "xls"){
-                request.object.set("icon","fa-file-excel-o")
+            if (type[type.length - 1] == "png" || type[type.length - 1] == "jpg" || type[type.length - 1] == "jpeg" || type[type.length - 1] == "gif") {
+                request.object.set("icon", "fa-file-image-o")
+            } else if (type[type.length - 1] == "pdf") {
+                request.object.set("icon", "fa-file-pdf-o")
+            } else if (type[type.length - 1] == "doc" || type[type.length - 1] == "docx" || type[type.length - 1] == "txt") {
+                request.object.set("icon", "fa-file-text-o")
+            } else if (type[type.length - 1] == "pptx" || type[type.length - 1] == "ppt") {
+                request.object.set("icon", "fa-file-powerpoint-o")
+            } else if (type[type.length - 1] == "xlsx" || type[type.length - 1] == "xls") {
+                request.object.set("icon", "fa-file-excel-o")
             }
 
-        }
-        catch(e){
+        } catch (e) {
             console.log(e)
         }
 
@@ -301,7 +300,7 @@ Parse.Cloud.beforeSave("Files", function (request, response) {
     }
 });
 
-Parse.Cloud.afterSave("ActionPlans", function (request, response) {
+Parse.Cloud.afterSave("ActionPlans", function(request, response) {
     if (request.object.get("published") == true) {
         response.success("Published: Turn off editing");
     } else {
@@ -312,20 +311,20 @@ Parse.Cloud.afterSave("ActionPlans", function (request, response) {
 ///////////////////////////////////////////////////////
 /////////// INVITE USERS TO APP ///////////////////
 ///////////////////////////////////////////////////////
-Parse.Cloud.define("removeInvite", function (request, response) {
+Parse.Cloud.define("removeInvite", function(request, response) {
     var query = new Parse.Query(Invites)
-    query.equalTo("email",request.params.email)
+    query.equalTo("email", request.params.email)
     query.find({
-        success: function(resp){
-            function success(res){
-                console.log("FOUND INVITE: ",res)
+        success: function(resp) {
+            function success(res) {
+                console.log("FOUND INVITE: ", res)
                 response.success(res)
             }
-            res[0].set("active",false)
+            res[0].set("active", false)
             res[0].save().then(success)
         },
-        error: function(e,r){
-            console.log(e,r)
+        error: function(e, r) {
+            console.log(e, r)
         }
     })
 })
@@ -333,7 +332,7 @@ Parse.Cloud.define("removeInvite", function (request, response) {
 ///////////////////////////////////////////////////////
 /////////// DEACTIVATE USER INVITE ///////////////////
 ///////////////////////////////////////////////////////
-Parse.Cloud.define("inviteUser", function (request, response) {
+Parse.Cloud.define("inviteUser", function(request, response) {
     var email = request.params.email
     var canUpload = request.params.canUpload || false
     var invite = new Invites();
@@ -348,33 +347,36 @@ Parse.Cloud.define("inviteUser", function (request, response) {
     ///// Set object properties for new Action project
     invite.set("email", request.params.email.toLowerCase())
     invite.set("canUpload", request.params.canUpload || false)
-    invite.set("active",true)
+    invite.set("active", true)
 
     ///// Save to MongoDB
     invite.save()
-        .then(function (results) {
+        .then(function(results) {
             console.log(results)
 
             /////// ***** Send Email to User Here ***** ///////
             MailgunAdapter.send({
-              templateName: 'userInvite',
-              // Optional override of your configuration's subject
-              subject: 'You\'re Invited',
-              // Optional override of the adapter's fromAddress
-              fromAddress: 'info@rytechdigital.ca',
-              recipient: email,
-              variables: { alert: 'New posts' }, // {{alert}} will be compiled to 'New posts'
-              // Additional message fields can be included with the "extra" option
-              // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
-              extra: {
-                attachments: [/* include attachment objects */],
-                replyTo: 'colemanjeff@mac.com'
-              }
-            }).then(function(res){
+                templateName: 'userInvite',
+                // Optional override of your configuration's subject
+                subject: 'You\'re Invited',
+                // Optional override of the adapter's fromAddress
+                fromAddress: 'admin@garagosoftware.com',
+                recipient: email,
+                variables: {
+                    user: Parse.User.current(),
+                    link: "https://dev-garago.herokuapp.com/#/register"
+                }, // {{alert}} will be compiled to 'New posts'
+                // Additional message fields can be included with the "extra" option
+                // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+                extra: {
+                    attachments: [],
+                    replyTo: 'noreply@garagosoftware.com'
+                }
+            }).then(function(res) {
                 response.success(results);
             });
         })
-        .catch(function (e) {
+        .catch(function(e) {
             response.error(e);
         });
 })
@@ -382,10 +384,10 @@ Parse.Cloud.define("inviteUser", function (request, response) {
 ///////////////////////////////////////////////////////
 /////////// MANAGE USERS IN APP ///////////////////
 ///////////////////////////////////////////////////////
-Parse.Cloud.define("getAllUsers", function (request, response) {
+Parse.Cloud.define("getAllUsers", function(request, response) {
     var query = new Parse.Query(Users)
     query.exists("objectId")
-    query.find().then(function(res){
+    query.find().then(function(res) {
         response.success(res)
     })
 })
@@ -393,7 +395,7 @@ Parse.Cloud.define("getAllUsers", function (request, response) {
 ///////////////////////////////////////////////////////
 /////////// INVITE USERS TO APP ///////////////////
 ///////////////////////////////////////////////////////
-Parse.Cloud.define("getNocCodes", function (request, response) {
+Parse.Cloud.define("getNocCodes", function(request, response) {
     var query1 = new Parse.Query(NocCodes)
     var searchTerm = request.params.searchTerm
     query1.contains("title", searchTerm)
@@ -405,14 +407,14 @@ Parse.Cloud.define("getNocCodes", function (request, response) {
     mainQuery.descending("title")
     mainQuery.limit(25)
     mainQuery.find({
-      success: function(res) {
-        console.log("Found NOC Codes: ", res[0].attributes)
-        
-        response.success(res)
-      },
-      error: function(e, r) {
-        response.error(e,r)
-      }
+        success: function(res) {
+            console.log("Found NOC Codes: ", res[0].attributes)
+
+            response.success(res)
+        },
+        error: function(e, r) {
+            response.error(e, r)
+        }
     })
 })
 

@@ -68,14 +68,7 @@ var api = new ParseServer({
           userInvite: {
             subject: 'You\'re invited to Garago Smart Library',
             pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
-            pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html'),
-            callback: (user) => { 
-              return { 
-                firstName: user.get('firstName'),
-                lastName: user.get('lastName'),
-                link: "https://garago-dev.herokuapp/#/register"
-              }
-            }
+            pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html')
           }
         }
       }
