@@ -359,7 +359,7 @@ Parse.Cloud.define("inviteUser", function (request, response) {
             MailgunAdapter.send({
               templateName: 'userInvite',
               // Optional override of your configuration's subject
-              subject: 'Welcome to Smart Library',
+              subject: 'You\'re Invited',
               // Optional override of the adapter's fromAddress
               fromAddress: 'info@rytechdigital.ca',
               recipient: email,
