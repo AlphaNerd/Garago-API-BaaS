@@ -44,7 +44,7 @@ var api = new ParseServer({
       module: 'parse-server-mailgun',
       options: {
         // The address that your emails come from
-        fromAddress: 'info@rytechdigital.ca',
+        fromAddress: 'admin@garagosoftware.com',
         // Your domain from mailgun.com
         domain: 'sandbox9479f367e273419389b402774b147fb1.mailgun.org',
         // Your API key from mailgun.com
@@ -69,6 +69,14 @@ var api = new ParseServer({
             subject: 'You\'re invited to Garago Smart Library',
             pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html'),
+            callback: (user) => { 
+              var user = { 
+                firstName: user.get('firstName'),
+                lastName: user.get('lastName'),
+                link: "https://garago-dev.herokuapp/#/register"
+              }
+              return user
+            }
           }
         }
       }

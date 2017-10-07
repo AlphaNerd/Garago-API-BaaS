@@ -220,7 +220,7 @@
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 680px;">
                 <tr>
                     <td style="padding: 20px 0; text-align: center">
-                        <img src="https://dev.goforms.ca/assets/img/app/profile/garago.png" width="200" height="50" alt="alt_text" border="0" style="height: auto; background: #dddddd; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
+                        <img src="https://dev.goforms.ca/assets/img/app/profile/garago.png" width="200" height="50" alt="alt_text" border="0" style="height: auto; background: #fff; font-family: sans-serif; font-size: 15px; line-height: 20px; color: #555555;">
                     </td>
                 </tr>
             </table>
@@ -233,9 +233,9 @@
 {{appName}} - as is defined in your Parse Server configuration object
 {{username}} - the Parse.User object's username property
 {{email}} - the Parse.User object's email property -->
-				<h3>Hi {{firstName}}!</h3>
-				<p>You have been invited to join the Garago Smart Library by {{firstName}} {{lastName}}</p>
-				<p>Click here to view file: {{link}}</p>
+				<h3>Hello,</h3>
+				<p>You have been invited to join the Garago Smart Library by {{user.firstName}} {{user.lastName}}</p>
+				<p>Click here to join: {{user.link}}</p>
 				<!-- <br\>
 				<p>If you did not request to change your password, please contact security@garago.com</p> -->
             </div>
@@ -263,7 +263,7 @@
         </div>
 
         <!-- Full Bleed Background Section : BEGIN -->
-        <table role="presentation" bgcolor="#709f2b" cellspacing="0" cellpadding="0" border="0" align="center" width="100%">
+        <table role="presentation" bgcolor="#2b3a41" cellspacing="0" cellpadding="0" border="0" align="center" width="100%">
             <tr>
                 <td valign="top" align="center">
                     <div style="max-width: 680px; margin: auto;" class="email-container">
