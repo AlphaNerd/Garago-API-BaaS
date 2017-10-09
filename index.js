@@ -46,7 +46,7 @@ var api = new ParseServer({
         // The address that your emails come from
         fromAddress: 'admin@garagosoftware.com',
         // Your domain from mailgun.com
-        domain: 'sandbox9479f367e273419389b402774b147fb1.mailgun.org',
+        domain: process.env.MAILDOMAIN,
         // Your API key from mailgun.com
         apiKey: process.env.MAILGUN_KEY,
         // The template section
