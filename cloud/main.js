@@ -130,7 +130,14 @@ Parse.Cloud.define("updateRating", function(request, response) {
         var fileId = request.params.fileId
         var query = new Parse.Query(Files)
         query.equalTo("objectId",fileId)
-        query.find().then(function(res){
+        query.find({
+            success:function(res){
+                console.log(res)
+            },
+            error: function(e,r){
+                console.log(e,r)
+            }
+        }).then(function(res){
             res.set("rating",rating)
             res.save().then(function(resp){
                 response.success(resp[0].attributes.rating)
