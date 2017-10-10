@@ -132,7 +132,7 @@ Parse.Cloud.define("updateRating", function(request, response) {
         query.equalTo("objectId",fileId)
         query.find({
             success:function(res){
-                console.log("FOUND FILE:", res)
+                console.log("FOUND FILE:", res[0])
             },
             error: function(e,r){
                 console.log(e,r)
