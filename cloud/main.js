@@ -304,8 +304,8 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
             }
             request.object.set("createdByUser", request.user)
             request.object.set("createdBy", userObj)
-            var myRating = request.object.get("rating") || 0
-            request.object.set("rating", myrating)
+            // var myRating = request.object.get("rating") || 0
+            // request.object.set("rating", myrating)
         } else {
             // request.object.set("createdBy","ROGIfaTamg")
         }
