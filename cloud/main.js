@@ -438,6 +438,24 @@ Parse.Cloud.define("getNocCodes", function(request, response) {
 })
 
 
+///////////////////////////////////////////////////////
+/////////// DELETE USER BY ID ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("deleteUserById", function(request, response) {
+    var query1 = new Parse.Query(Users)
+    query.equalTo("objectId",request.params.id)
+    query.find({
+        success: function(res) {
+            console.log("Found User: ", res[0])
+            response.success(res)
+        },
+        error: function(e, r) {
+            response.error(e, r)
+        }
+    })
+})
+
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
