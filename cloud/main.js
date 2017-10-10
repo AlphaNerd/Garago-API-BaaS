@@ -128,6 +128,7 @@ Parse.Cloud.define("addRating", function(request, response) {
     if (request.user) {
         var rating = request.params.rating
         response.success(1)
+        
     } else {
         response.error("User must be logged in to create plan.")
     }
