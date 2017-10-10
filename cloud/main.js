@@ -454,7 +454,7 @@ Parse.Cloud.define("deleteUserById", function(request, response) {
                 },
                 error:function(e,r){
                     console.log("Error Deleteing User")
-                    response.error(false)
+                    response.error(e,r)
                 }
             })
         },
