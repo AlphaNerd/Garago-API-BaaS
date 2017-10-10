@@ -124,7 +124,7 @@ Parse.Cloud.define("createNewProject", function(request, response) {
     }
 });
 
-Parse.Cloud.define("addRating", function(request, response) {
+Parse.Cloud.define("updateRating", function(request, response) {
     if (request.user) {
         var rating = request.params.rating
         var fileId = request.params.fileId
