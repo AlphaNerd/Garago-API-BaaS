@@ -131,8 +131,8 @@ Parse.Cloud.define("updateRating", function(request, response) {
         var query = new Parse.Query(Files)
         query.equalTo("objectId",fileId)
         query.find().then(function(res){
-            res[0].set("rating",rating)
-            res[0].save().then(function(resp){
+            res.set("rating",rating)
+            res.save().then(function(resp){
                 response.success(resp[0].attributes.rating)
             })
         })
@@ -454,7 +454,7 @@ Parse.Cloud.define("deleteUserById", function(request, response) {
                 },
                 error:function(e,r){
                     console.log("Error Deleteing User")
-                    response.error(e,r)
+                    response.error(false)
                 }
             })
         },
