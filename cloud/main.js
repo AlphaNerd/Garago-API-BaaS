@@ -447,7 +447,7 @@ Parse.Cloud.define("deleteUserById", function(request, response) {
     query.find({
         success: function(res) {
             console.log("Found User: ", res[0])
-            res[0].destroy({
+            res[0].destroy({useMasterKey: true,
                 success: function(res){
                     console.log("Deleted User")
                     response.success(true)
