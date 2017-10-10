@@ -128,7 +128,14 @@ Parse.Cloud.define("updateRating", function(request, response) {
     if (request.user) {
         var rating = request.params.rating
         var fileId = request.params.fileId
-        response.success(1)
+        var query = new Parse.Query(Files)
+        query.equalTo("objectId",fileId)
+        query.find().then(function(res){
+            res[0].set("rating",rating)
+            res[0].save().then(function(resp){
+                response.success(resp[0].attributes.rating)
+            })
+        })
     } else {
         response.error("User must be logged in to create plan.")
     }
