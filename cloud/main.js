@@ -443,10 +443,11 @@ Parse.Cloud.define("getNocCodes", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("deleteUserById", function(request, response) {
     var query = new Parse.Query(Users)
-    query.equalTo("objectId",request.params.id)
+    query.equalTo("objectId",request.params.userid)
     query.find({
         success: function(res) {
-            console.log("Found User: ", res[0])
+            console.log("Found User: ", res)
+
             response.success(res)
         },
         error: function(e, r) {
