@@ -133,22 +133,21 @@ Parse.Cloud.define("updateRating", function(request, response) {
         query.find({
             success:function(res){
                 console.log("FOUND FILE:", res[0])
+                res[0].set("rating",rating)
+                res[0].save({
+                    success: function(res){
+                        console.log("SAVED NEW RATING: ",res)
+                    },
+                    error: function(e,r){
+                        console.log("ERROR SAVING: ",e,r)
+                    }
+                }).then(function(res){
+                    response.success()
+                })
             },
             error: function(e,r){
                 console.log(e,r)
             }
-        }).then(function(resp){
-            resp[0].set("rating",rating)
-            resp[0].save({
-                success: function(res){
-                    console.log("SAVED NEW RATING: ",res)
-                },
-                error: function(e,r){
-                    console.log("ERROR SAVING: ",e,r)
-                }
-            }).then(function(res){
-                response.success()
-            })
         })
     } else {
         response.error("User must be logged in to create plan.")
