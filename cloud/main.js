@@ -137,10 +137,10 @@ Parse.Cloud.define("updateRating", function(request, response) {
             error: function(e,r){
                 console.log(e,r)
             }
-        }).then(function(res){
-            res.set("rating",rating)
-            res.save().then(function(resp){
-                response.success(resp[0].attributes.rating)
+        }).then(function(resp){
+            resp.set("rating",rating)
+            resp.save().then(function(res){
+                response.success(res.attributes.rating)
             })
         })
     } else {
