@@ -138,8 +138,8 @@ Parse.Cloud.define("updateRating", function(request, response) {
                 console.log(e,r)
             }
         }).then(function(resp){
-            resp.set("rating",rating)
-            resp.save({
+            resp[0].set("rating",rating)
+            resp[0].save({
                 success: function(res){
                     console.log("SAVED NEW RATING: ",res)
                 },
