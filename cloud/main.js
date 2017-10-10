@@ -132,15 +132,22 @@ Parse.Cloud.define("updateRating", function(request, response) {
         query.equalTo("objectId",fileId)
         query.find({
             success:function(res){
-                console.log(res)
+                console.log("FOUND FILE:", res)
             },
             error: function(e,r){
                 console.log(e,r)
             }
         }).then(function(resp){
             resp.set("rating",rating)
-            resp.save().then(function(res){
-                response.success(res.attributes.rating)
+            resp.save({
+                success: function(res){
+                    console.log("SAVED NEW RATING: ",res)
+                },
+                error: function(e,r){
+                    console.log("ERROR SAVING: ",e,r)
+                }
+            }).then(function(res){
+                response.success()
             })
         })
     } else {
