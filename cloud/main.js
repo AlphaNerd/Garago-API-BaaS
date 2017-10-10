@@ -126,11 +126,9 @@ Parse.Cloud.define("createNewProject", function(request, response) {
 
 Parse.Cloud.define("addRating", function(request, response) {
     if (request.user) {
-
-        var rating = request.params.rating
+        var rating = request.params.rating,
         var fileId = request.params.fileId
         response.success(1)
-
     } else {
         response.error("User must be logged in to create plan.")
     }
