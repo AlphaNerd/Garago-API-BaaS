@@ -326,6 +326,7 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
 
         } catch (e) {
             console.log(e)
+            response.error(e)
         }
 
         response.success()
