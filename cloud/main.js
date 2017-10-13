@@ -109,8 +109,8 @@ Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
                     response.success(true)
                 },
                 error:function(e,r){
-                    console.log("Error Deleteing User")
-                    response.error(false)
+                    console.log("Error Updating User")
+                    response.error(e,r)
                 }
             })
         },
