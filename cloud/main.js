@@ -96,7 +96,7 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 ////// TOGGLE UPLOAD PRIVILIEGES
 Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
     var userid = request.params.userid
-    var data = request.params.data
+    var mydata = request.params.mydata
     if (request.user) {
         var query = new Parse.Query(Users)
         query.equalTo("objectId",userid)
