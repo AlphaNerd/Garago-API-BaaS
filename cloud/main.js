@@ -451,7 +451,7 @@ Parse.Cloud.define("getAllUsers", function(request, response) {
 /////////// INVITE USERS TO APP ///////////////////
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("getNocCodes", function(request, response) {
-    var language = request.user.get("language")
+    var language = request.params.userlang
     var query1 = new Parse.Query(NocCodes)
     var searchTerm = request.params.searchTerm
     query1.contains("title", searchTerm)
