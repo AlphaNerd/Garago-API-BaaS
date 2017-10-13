@@ -101,7 +101,7 @@ Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
         var query = new Parse.Query(Users)
         query.equalTo("objectId",userid)
         query.find().then(function(res){
-            res.set("canUpload",data)
+            res.set("canUpload",!data)
             res.save().then(function(resp){
                 response.success(resp)
             })
