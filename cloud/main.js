@@ -93,6 +93,24 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
     }
 });
 
+////// TOGGLE UPLOAD PRIVILIEGES
+Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
+    var userid - request.params.userid
+    var data = request.params.data
+    if (request.user) {
+        var query = new Parse.Query(Users)
+        query.equalTo("objectId",userid)
+        query.find().then(function(res){
+            res.set("canUpload",data)
+            res.save().then(function(resp){
+                response.success(resp)
+            })
+        })
+    } else {
+        response.error("User must be logged in to create plan.")
+    }
+});
+
 Parse.Cloud.define("createNewProject", function(request, response) {
     if (request.user) {
         var project = new Project();
