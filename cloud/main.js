@@ -103,7 +103,7 @@ Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
         success: function(res) {
             console.log("Found User: ", res[0])
             res[0].set("canUpload",!request.params.mydata)
-            res[0].save({useMasterKey: true},{
+            res[0].save(null,{useMasterKey: true},{
                 success: function(res){
                     console.log("Updated User")
                     response.success(true)
