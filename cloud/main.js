@@ -98,28 +98,24 @@ Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
     console.log("TOGGLE UPLOAD PRIVS")
     var userid = request.params.userid
     var mydata = request.params.mydata
-    if (request.user) {
-        var query = new Parse.Query(Users)
-        query.equalTo("objectId",userid)
-        query.find({
-            success: function(res){
-                res.set("canUpload",!data)
-                res.save({
-                    success:function(resp){
-                        response.success(resp)
-                    },
-                    error: function(e,r){
-                        response.error(e,r)
-                    }
-                })
-            },
-            error: function(e,r){
-                response.error(e,r)
-            }
-        })
-    } else {
-        response.error("User must be logged in to create plan.")
-    }
+    var query = new Parse.Query(Users)
+    query.equalTo("objectId",userid)
+    query.find({
+        success: function(res){
+            res.set("canUpload",!data)
+            res.save({
+                success:function(resp){
+                    response.success(resp)
+                },
+                error: function(e,r){
+                    response.error(e,r)
+                }
+            })
+        },
+        error: function(e,r){
+            response.error(e,r)
+        }
+    })
 });
 
 Parse.Cloud.define("createNewProject", function(request, response) {
