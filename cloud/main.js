@@ -93,30 +93,32 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
     }
 });
 
-////// TOGGLE UPLOAD PRIVILIEGES
+///////////////////////////////////////////////////////
+/////////// DELETE USER BY ID ///////////////////
+///////////////////////////////////////////////////////
 Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
-    console.log("TOGGLE UPLOAD PRIVS",request.params.userid,request.params.mydata)
-    var userid = request.params.userid
-    var mydata = request.params.mydata
     var query = new Parse.Query(Users)
-    query.equalTo("objectId",userid)
+    query.equalTo("objectId",request.params.userid)
     query.find({
-        success: function(res){
-            res.set("canUpload",!data)
-            res.save({
-                success:function(resp){
-                    response.success(resp)
+        success: function(res) {
+            console.log("Found User: ", res[0])
+            res[0].set("canUpload",!request.mydata)
+            res[0].save({useMasterKey: true,
+                success: function(res){
+                    console.log("Updated User")
+                    response.success(true)
                 },
-                error: function(e,r){
-                    response.error(e,r)
+                error:function(e,r){
+                    console.log("Error Deleteing User")
+                    response.error(false)
                 }
             })
         },
-        error: function(e,r){
-            response.error(e,r)
+        error: function(e, r) {
+            response.error(e, r)
         }
     })
-});
+})
 
 Parse.Cloud.define("createNewProject", function(request, response) {
     if (request.user) {
