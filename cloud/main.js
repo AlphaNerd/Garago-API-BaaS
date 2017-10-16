@@ -395,6 +395,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         lastName: request.user.attributes.lastName,
         email: request.user.attributes.email
     }
+
     ///// Set User ACL Privelages
     var acl = new Parse.ACL();
     acl.setPublicReadAccess(true);
@@ -406,7 +407,8 @@ Parse.Cloud.define("inviteUser", function(request, response) {
     invite.set("email", request.params.email.toLowerCase())
     invite.set("canUpload", request.params.canUpload || false)
     invite.set("isAdmin", request.params.isAdmin || false)
-    invite.set("region", request.params.region || "default")
+    invite.set("region", request.params.regionName || "")
+    invite.set("regionId", request.params.regionId || "")
     invite.set("active", true)
     invite.set("invitedBy", invitedBy)
     invite.set("language", "en")
@@ -456,6 +458,7 @@ Parse.Cloud.define("getAllUsers", function(request, response) {
         query.equalTo("regionId",region)
     }
     query.exists("objectId")
+    query.descending("firstName")
     query.find().then(function(res) {
         response.success(res)
     })
