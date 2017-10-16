@@ -400,6 +400,8 @@ Parse.Cloud.define("inviteUser", function(request, response) {
     ///// Set object properties for new Action project
     invite.set("email", request.params.email.toLowerCase())
     invite.set("canUpload", request.params.canUpload || false)
+    invite.set("isAdmin", request.params.isAdmin || false)
+    invite.set("region", request.params.region || "default")
     invite.set("active", true)
 
     ///// Save to MongoDB
