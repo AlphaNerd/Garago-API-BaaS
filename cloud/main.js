@@ -389,8 +389,12 @@ Parse.Cloud.define("inviteUser", function(request, response) {
     var email = request.params.email
     var canUpload = request.params.canUpload || false
     var invite = new Invites();
-    var invitedBy = request.user.attributes
-    invitedBy.id = request.user.id
+    var invitedBy = {
+        id: request.user.id,
+        firstName: request.user.attributes.firstName,
+        lastName: request.user.attributes.lastName,
+        email: request.user.attributes.email
+    }
     ///// Set User ACL Privelages
     var acl = new Parse.ACL();
     acl.setPublicReadAccess(true);
@@ -405,6 +409,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
     invite.set("region", request.params.region || "default")
     invite.set("active", true)
     invite.set("invitedBy", invitedBy)
+    invite.set("language", "en")
 
     ///// Save to MongoDB
     invite.save()
