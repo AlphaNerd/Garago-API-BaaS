@@ -389,10 +389,8 @@ Parse.Cloud.define("inviteUser", function(request, response) {
     var email = request.params.email
     var canUpload = request.params.canUpload || false
     var invite = new Invites();
-    var invitedBy = { 
-        data: request.user.attributes,
-        id: request.user.id
-    }
+    var invitedBy = request.user.attributes
+    invitedBy.id = request.user.id
     ///// Set User ACL Privelages
     var acl = new Parse.ACL();
     acl.setPublicReadAccess(true);
