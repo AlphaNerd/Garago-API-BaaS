@@ -320,7 +320,7 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
                     username: request.user.get("username")
                 },
                 email: request.user.attributes.email,
-                image: request.user.attributes.image
+                image: request.user.attributes.image,
             }
             request.object.set("createdByUser", request.user)
             request.object.set("createdBy", userObj)
