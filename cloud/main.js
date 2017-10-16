@@ -450,6 +450,11 @@ Parse.Cloud.define("inviteUser", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("getAllUsers", function(request, response) {
     var query = new Parse.Query(Users)
+    var a = request.user.get("isSuperAdmin")
+    if(!a){
+        var region = request.user.get("regionId")
+        query.equalTo("regionId",region)
+    }
     query.exists("objectId")
     query.find().then(function(res) {
         response.success(res)
