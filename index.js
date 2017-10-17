@@ -69,6 +69,11 @@ var api = new ParseServer({
             subject: 'You\'re invited to Garago Smart Library',
             pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html')
+          },
+          userRegistered: {
+            subject: 'New Smart Library user has registered.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/new_user.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/new_user.html')
           }
         }
       }

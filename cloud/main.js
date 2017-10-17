@@ -447,6 +447,40 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         });
 })
 
+
+
+
+///////////////////////////////////////////////////////
+/////////// NEW USER NOTIFICATION   ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("newUserAdminNotify", function(request, response) {
+    var invitedBy = request.params.invitedBy
+    /////// ***** Send Email to User Here ***** ///////
+    MailgunAdapter.send({
+        templateName: 'userInvite',
+        // Optional override of your configuration's subject
+        subject: 'You\'re Invited',
+        // Optional override of the adapter's fromAddress
+        fromAddress: 'admin@garagosoftware.com',
+        recipient: invitedBy.email,
+        variables: {
+            firstName: request.user.get("firstName"),
+            lastName: request.user.get("lastName"),
+        }, // {{alert}} will be compiled to 'New posts'
+        // Additional message fields can be included with the "extra" option
+        // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+        extra: {
+            attachments: [],
+            replyTo: 'noreply@garagosoftware.com'
+        }
+    }).then(function(res) {
+        response.success(results);
+    });    
+
+})
+
+
+
 ///////////////////////////////////////////////////////
 /////////// MANAGE USERS IN APP ///////////////////
 ///////////////////////////////////////////////////////
