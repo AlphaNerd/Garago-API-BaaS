@@ -457,7 +457,7 @@ Parse.Cloud.define("newUserAdminNotify", function(request, response) {
     var invitedBy = request.params.invitedBy
     /////// ***** Send Email to User Here ***** ///////
     MailgunAdapter.send({
-        templateName: 'userInvite',
+        templateName: 'userRegistered',
         // Optional override of your configuration's subject
         subject: 'You\'re Invited',
         // Optional override of the adapter's fromAddress
