@@ -474,6 +474,7 @@ Parse.Cloud.define("newUserAdminNotify", function(request, response) {
             replyTo: 'noreply@garagosoftware.com'
         }
     }).then(function(res) {
+        
         response.success(results);
     });    
 
