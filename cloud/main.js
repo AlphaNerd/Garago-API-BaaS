@@ -459,7 +459,7 @@ Parse.Cloud.define("newUserAdminNotify", function(request, response) {
     MailgunAdapter.send({
         templateName: 'userRegistered',
         // Optional override of your configuration's subject
-        subject: 'You\'re Invited',
+        subject: 'New Member at PETL Smart Library',
         // Optional override of the adapter's fromAddress
         fromAddress: 'admin@garagosoftware.com',
         recipient: invitedBy.email,
