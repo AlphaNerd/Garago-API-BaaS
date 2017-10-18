@@ -311,7 +311,7 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
 
     function finishSave() {
         var fileURL =  request.object.get("file")._url
-        var keywords = textract.fromFileWithPath(fileURL, function( error, text ) {
+        var keywords = textract.fromUrl(fileURL, function( error, text ) {
             if(error){
                 console.log("ERROR EXTRACTING TEXT: ",error)
             }else{
