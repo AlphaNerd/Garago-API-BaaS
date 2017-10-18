@@ -4,6 +4,8 @@ const { AppCache } = require('parse-server/lib/cache');
 // NOTE: It's best to do this inside the Parse.Cloud.define(...) method body and not at the top of your file with your other imports. This gives Parse Server time to boot, setup cloud code and the email adapter.
 const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
 
+var textract = require('textract');
+
 var ColorScheme = require('color-scheme');
 var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
@@ -308,6 +310,10 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
 
 
     function finishSave() {
+        var fileURL =  request.object.get("file")._url
+        var keywords = textract.fromFileWithPath(fileURL, function( error, text ) {
+            console.log("EXTRACTED TEXT: ",text)
+        })
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
 
