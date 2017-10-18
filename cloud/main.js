@@ -4,8 +4,6 @@ const { AppCache } = require('parse-server/lib/cache');
 // NOTE: It's best to do this inside the Parse.Cloud.define(...) method body and not at the top of your file with your other imports. This gives Parse Server time to boot, setup cloud code and the email adapter.
 const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
 
-var textract = require('textract');
-
 var ColorScheme = require('color-scheme');
 var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
@@ -15,6 +13,17 @@ var Files = Parse.Object.extend("Files");
 var Invites = Parse.Object.extend("Invites");
 var Users = Parse.Object.extend("User");
 var NocCodes = Parse.Object.extend("NocCodes");
+
+
+
+// import entire SDK
+var AWS = require('aws-sdk');
+// import AWS object without services
+var AWS = require('aws-sdk/global');
+// import individual service
+var S3 = require('aws-sdk/clients/s3');
+
+
 
 Parse.Cloud.define("validateBetaUser", function(request, response) {
     var betaUsers = [
@@ -311,13 +320,6 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
 
     function finishSave() {
         var fileURL =  request.object.get("file")._url
-        var keywords = textract.fromUrl(fileURL, function( error, text ) {
-            if(error){
-                console.log("ERROR EXTRACTING TEXT: ",error)
-            }else{
-                console.log("EXTRACTED TEXT: ",text)
-            }
-        })
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
 
@@ -563,6 +565,9 @@ Parse.Cloud.define("deleteUserById", function(request, response) {
         }
     })
 })
+
+
+
 
 
 function getRandomInt(min, max) {
