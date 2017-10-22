@@ -27,6 +27,7 @@ var S3 = require('aws-sdk/clients/s3');
 Parse.Cloud.define("updateUserProfileImage", function(request,response){;
     var file = request.params.file
     console.log(file)
+    response.success("Received: ",file)
 })
 
 
