@@ -24,13 +24,6 @@ var AWS = require('aws-sdk/global');
 var S3 = require('aws-sdk/clients/s3');
 
 
-Parse.Cloud.define("updateUserProfileImage", function(request,response){;
-    var file = request.params.file
-    console.log(file)
-    response.success("Received: ",file)
-})
-
-
 Parse.Cloud.define("validateBetaUser", function(request, response) {
     var betaUsers = [
         "ashley.counsell@gnb.ca",
@@ -306,20 +299,21 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
     console.log("SEARCH FOR THIS FILENAME: ", title.toLowerCase())
     query.startsWith("title", title.toLowerCase())
     ///// Find Object to set as user favorite
-    query.find()
-        .then(function(results) {
-            console.log("RESULTS Finding File: ", results)
-            if (results[0]) {
-                var myTitle = title.replace(/.([^.]*)$/, '(' + (results.length + 1) + ').' + '$1');
-                request.object.set("title", myTitle.toLowerCase())
-                finishSave()
-            } else {
-                finishSave()
-            }
-        })
-        .catch(function(e) {
-            response.error(e);
-        });
+    finishSave()
+    // query.find()
+    //     .then(function(results) {
+    //         console.log("RESULTS Finding File: ", results)
+    //         if (results[0]) {
+    //             var myTitle = title.replace(/.([^.]*)$/, '(' + (results.length + 1) + ').' + '$1');
+    //             request.object.set("title", myTitle.toLowerCase())
+    //             finishSave()
+    //         } else {
+    //             finishSave()
+    //         }
+    //     })
+    //     .catch(function(e) {
+    //         response.error(e);
+    //     });
 
 
     function finishSave() {
