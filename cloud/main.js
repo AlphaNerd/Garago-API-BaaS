@@ -4,6 +4,15 @@ const { AppCache } = require('parse-server/lib/cache');
 // NOTE: It's best to do this inside the Parse.Cloud.define(...) method body and not at the top of your file with your other imports. This gives Parse Server time to boot, setup cloud code and the email adapter.
 const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
 
+
+/// ray's deps
+const textract = require('textract')
+const pdf_extract = require('pdf-text-extract')
+const countWords = require("count-words")
+const summarizer = require('nodejs-text-summarizer')
+
+
+
 var ColorScheme = require('color-scheme');
 var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
@@ -297,9 +306,34 @@ Parse.Cloud.afterSave("Files", function(request) {
     console.log("OBJECT AFTERSAVE: ", request.object)
     var hasKeywords = request.object.get('keywords');
     var isActive = request.object.get('active');
-    if (hasKeywords && isActive) {
+    if (hasKeywords || !isActive) {
         return;
     }
+
+
+
+
+    //// ray's shiznit
+    var url = request.object._url
+
+    !!url ? textract.fromUrl( url, function( error, text_body ) {
+        // Error handling
+        if (error) res.status(404).json({error: "could not read file at url", params: req.query});
+
+        // Get keyword density
+        keywords = countWords( text_body );
+        text_body = text_body.split(" ").slice(0, 100).join(' ')
+        // Summarize the text
+        var summary = summarizer( text_body );
+        var summary_keywords = get_keywords(summary, "summary");
+        // Limit text summary to 100 words
+        summary = summary.split(" ").slice(0, 100).join(' ');
+    })
+
+
+
+
+
     console.log("AFTER SAVE EXECUTED");
     var myToken = request.object;
     myToken.set("keywords", ["please","work"]);
@@ -312,6 +346,8 @@ Parse.Cloud.afterSave("Files", function(request) {
             console.log(err);
         }
     });
+
+
 })
 
 
