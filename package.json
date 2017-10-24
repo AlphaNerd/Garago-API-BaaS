@@ -15,6 +15,7 @@
     "count-words": "^1.0.9",
     "express": "~4.11.x",
     "kerberos": "~0.0.x",
+    "logger": "0.0.1",
     "nodejs-text-summarizer": "^2.0.3",
     "parse": "~1.8.0",
     "parse-server": "*",
