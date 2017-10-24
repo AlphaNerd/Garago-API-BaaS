@@ -295,7 +295,23 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
 
 Parse.Cloud.afterSave("Files", function(request) {
     console.log("OBJECT AFTERSAVE: ", request.object)
-    request.object.set("keywords",["New","keywords","help","search"])
+    var isUpdated = request.object.get('updatedAt').getTime() === request.object.get('createdAt').getTime();
+    if (isUpdated) {
+        return;
+    }
+
+    console.log("AFTER SAVE EXECUTED");
+    var myToken = request.object;
+    myToken.set("keywords", ["please","work"]);
+    myToken.save(null, {
+        useMasterKey: true,
+        success: function () {
+            console.log('success');
+        },
+        error: function (obj, err) {
+            console.log(err);
+        }
+    });
 })
 
 
