@@ -296,10 +296,10 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
 Parse.Cloud.afterSave("Files", function(request) {
     console.log("OBJECT AFTERSAVE: ", request.object)
     var hasKeywords = request.object.get('keywords');
-    if (hasKeywords) {
+    var isActive = request.object.get('active');
+    if (hasKeywords && isActive) {
         return;
     }
-
     console.log("AFTER SAVE EXECUTED");
     var myToken = request.object;
     myToken.set("keywords", ["please","work"]);
