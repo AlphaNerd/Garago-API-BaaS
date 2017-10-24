@@ -295,8 +295,8 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
 
 Parse.Cloud.afterSave("Files", function(request) {
     console.log("OBJECT AFTERSAVE: ", request.object)
-    var isUpdated = request.object.get('updatedAt').getTime() === request.object.get('createdAt').getTime();
-    if (isUpdated) {
+    var hasKeywords = request.object.get('keywords').length > 0;
+    if (hasKeywords) {
         return;
     }
 
