@@ -316,6 +316,7 @@ Parse.Cloud.afterSave("Files", function(request) {
 
     //// ray's shiznit
     var url = request.object.get("file")._url
+    console.log("URL FOR EXTRACT: ",url)
 
     !!url ? textract.fromUrl( url, function( error, text_body ) {
         // Error handling
@@ -346,6 +347,7 @@ Parse.Cloud.afterSave("Files", function(request) {
 
     }): null
 
+    console.log("MADE IT THIS FAR")
 
 })
 
