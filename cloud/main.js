@@ -9,8 +9,8 @@ const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
 const textract = require('textract')
 const pdf_extract = require('pdf-text-extract')
 const countWords = require("count-words")
-const summarizer = require('nodejs-text-summarizer')
-const logger = require('logger')
+// const summarizer = require('nodejs-text-summarizer')
+// const logger = require('logger')
 
 
 
@@ -323,16 +323,16 @@ Parse.Cloud.afterSave("Files", function(request) {
 
         // Get keyword density
         keywords = countWords( text_body );
-        text_body = text_body.split(" ").slice(0, 100).join(' ')
-        // Summarize the text
-        var summary = summarizer( text_body );
-        var summary_keywords = countWords(summary);
-        // Limit text summary to 100 words
-        summary = summary.split(" ").slice(0, 100).join(' ');
+        // text_body = text_body.split(" ").slice(0, 100).join(' ')
+        // // Summarize the text
+        // var summary = summarizer( text_body );
+        // var summary_keywords = countWords(summary);
+        // // Limit text summary to 100 words
+        // summary = summary.split(" ").slice(0, 100).join(' ');
 
         console.log("AFTER SAVE EXECUTED");
         var myToken = request.object;
-        myToken.set("keywords", summary_keywords);
+        myToken.set("keywords", keywords);
         myToken.save(null, {
             useMasterKey: true,
             success: function () {
