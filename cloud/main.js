@@ -319,7 +319,7 @@ Parse.Cloud.afterSave("Files", function(request) {
 
     !!url ? textract.fromUrl( url, function( error, text_body ) {
         // Error handling
-        if (error) res.status(404).json({error: "could not read file at url", params: req.query});
+        if (error) return
 
         // Get keyword density
         keywords = countWords( text_body );
