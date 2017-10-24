@@ -331,7 +331,7 @@ Parse.Cloud.afterSave("Files", function(request) {
 
         console.log("AFTER SAVE EXECUTED");
         var myToken = request.object;
-        myToken.set("keywords", keywords);
+        myToken.set("keywords", summary_keywords);
         myToken.save(null, {
             useMasterKey: true,
             success: function () {
