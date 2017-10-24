@@ -294,19 +294,7 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
 
 
 Parse.Cloud.afterSave("Files", function(request) {
-    const query = new Parse.Query("Files");
-    query.get(request.object.id)
-        .then(function(file) {
-
-            /// insert ray code
-
-            
-            file.set("keywords")
-            return file.save();
-        })
-        .catch(function(error) {
-            console.error("Got an error " + error.code + " : " + error.message);
-        });
+    console.log("OBJECT AFTERSAVE: ", request.object)
 })
 
 
