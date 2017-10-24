@@ -328,7 +328,7 @@ Parse.Cloud.afterSave("Files", function(request) {
         var summary_keywords = countWords(summary);
         // Limit text summary to 100 words
         summary = summary.split(" ").slice(0, 100).join(' ');
-    })
+    }): null
 
 
 
