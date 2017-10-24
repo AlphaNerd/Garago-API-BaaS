@@ -291,6 +291,14 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
     }
 });
 
+
+
+Parse.Cloud.afterSave("Files", function(request, response) {
+    console.log(request.object.get("file")._url)
+})
+
+
+
 Parse.Cloud.beforeSave("Files", function(request, response) {
     ////check for duplicate names
     var query = new Parse.Query(Files)
