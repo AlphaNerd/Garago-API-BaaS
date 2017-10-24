@@ -318,7 +318,7 @@ Parse.Cloud.afterSave("Files", function(request) {
     var url = request.object.get("file")._url
     console.log("URL FOR EXTRACT: ",url)
 
-    !!url ? textract.fromUrl( url, function( error, text_body ) {
+    textract.fromUrl( url, function( error, text_body ) {
         // Error handling
         if (error) return
 
@@ -332,6 +332,7 @@ Parse.Cloud.afterSave("Files", function(request) {
         // summary = summary.split(" ").slice(0, 100).join(' ');
 
         console.log("AFTER SAVE EXECUTED");
+        console.log("KEYWORDS: ",keywords)
         var myToken = request.object;
         myToken.set("keywords", keywords);
         myToken.save(null, {
@@ -345,7 +346,7 @@ Parse.Cloud.afterSave("Files", function(request) {
         });
 
 
-    }): null
+    })
 
     console.log("MADE IT THIS FAR")
 
