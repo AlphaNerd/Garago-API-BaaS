@@ -324,6 +324,7 @@ Parse.Cloud.afterSave("Files", function(request) {
 
         // Get keyword density
         keywords = countWords( text_body );
+        keywords = Object.key(keywords) .map(function(word){ return Object.keys(word)[0]})
         // text_body = text_body.split(" ").slice(0, 100).join(' ')
         // // Summarize the text
         // var summary = summarizer( text_body );
