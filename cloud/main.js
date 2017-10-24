@@ -10,6 +10,7 @@ const textract = require('textract')
 const pdf_extract = require('pdf-text-extract')
 const countWords = require("count-words")
 const summarizer = require('nodejs-text-summarizer')
+const summarizer = require('logger')
 
 
 
@@ -342,7 +343,7 @@ Parse.Cloud.afterSave("Files", function(request) {
             }
         });
 
-    
+
     }): null
 
 
