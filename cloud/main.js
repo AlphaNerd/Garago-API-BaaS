@@ -108,12 +108,12 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
     var query = new Parse.Query(Users)
-    query.equalTo("objectId",request.params.userid)
+    query.equalTo("objectId", request.params.userid)
     query.find({
         success: function(res) {
             console.log("Found User: ", res[0])
-            res[0].set("canUpload",!request.params.mydata)
-            res[0].save(null,{useMasterKey: true}).then(function(res){
+            res[0].set("canUpload", !request.params.mydata)
+            res[0].save(null, { useMasterKey: true }).then(function(res) {
                 response.success(res)
             })
         },
@@ -159,24 +159,24 @@ Parse.Cloud.define("updateRating", function(request, response) {
         var rating = request.params.rating
         var fileId = request.params.fileId
         var query = new Parse.Query(Files)
-        query.equalTo("objectId",fileId)
+        query.equalTo("objectId", fileId)
         query.find({
-            success:function(res){
+            success: function(res) {
                 console.log("FOUND FILE:", res[0])
-                res[0].set("rating",rating)
+                res[0].set("rating", rating)
                 res[0].save({
-                    success: function(res){
-                        console.log("SAVED NEW RATING: ",res)
+                    success: function(res) {
+                        console.log("SAVED NEW RATING: ", res)
                     },
-                    error: function(e,r){
-                        console.log("ERROR SAVING: ",e,r)
+                    error: function(e, r) {
+                        console.log("ERROR SAVING: ", e, r)
                     }
-                }).then(function(res){
+                }).then(function(res) {
                     response.success()
                 })
             },
-            error: function(e,r){
-                console.log(e,r)
+            error: function(e, r) {
+                console.log(e, r)
             }
         })
     } else {
@@ -293,8 +293,20 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
 
 
 
-Parse.Cloud.afterSave("Files", function(request, response) {
-    console.log(request.object.get("file")._url)
+Parse.Cloud.afterSave("Files", function(request) {
+    const query = new Parse.Query("Files");
+    query.get(request.object.id)
+        .then(function(file) {
+
+            /// insert ray code
+
+            
+            file.set("keywords")
+            return file.save();
+        })
+        .catch(function(error) {
+            console.error("Got an error " + error.code + " : " + error.message);
+        });
 })
 
 
@@ -325,7 +337,7 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
 
 
     function finishSave() {
-        var fileURL =  request.object.get("file")._url
+        var fileURL = request.object.get("file")._url
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
 
@@ -493,7 +505,7 @@ Parse.Cloud.define("newUserAdminNotify", function(request, response) {
         }
     }).then(function(res) {
         response.success(res);
-    });    
+    });
 
 })
 
@@ -505,9 +517,9 @@ Parse.Cloud.define("newUserAdminNotify", function(request, response) {
 Parse.Cloud.define("getAllUsers", function(request, response) {
     var query = new Parse.Query(Users)
     var a = request.user.get("isSuperAdmin")
-    if(!a){
+    if (!a) {
         var region = request.user.get("regionId")
-        query.equalTo("regionId",region)
+        query.equalTo("regionId", region)
     }
     query.exists("objectId")
     query.descending("firstName")
@@ -551,16 +563,17 @@ Parse.Cloud.define("getNocCodes", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("deleteUserById", function(request, response) {
     var query = new Parse.Query(Users)
-    query.equalTo("objectId",request.params.userid)
+    query.equalTo("objectId", request.params.userid)
     query.find({
         success: function(res) {
             console.log("Found User: ", res[0])
-            res[0].destroy({useMasterKey: true,
-                success: function(res){
+            res[0].destroy({
+                useMasterKey: true,
+                success: function(res) {
                     console.log("Deleted User")
                     response.success(true)
                 },
-                error:function(e,r){
+                error: function(e, r) {
                     console.log("Error Deleteing User")
                     response.error(false)
                 }
