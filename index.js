@@ -1,6 +1,6 @@
 // Example express application adding the parse-server module to expose Parse
 // compatible API routes.
-
+require('dotenv').config();
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
@@ -40,44 +40,44 @@ var api = new ParseServer({
     classNames: ["ActionPlans","Messages","Projects","Organizations","Teams","Activities"] // List of classes to support for query subscriptions
   },
   filesAdapter: s3Adapter,
-  emailAdapter: {
-      module: 'parse-server-mailgun',
-      options: {
-        // The address that your emails come from
-        fromAddress: 'admin@garagosoftware.com',
-        // Your domain from mailgun.com
-        domain: process.env.MAILDOMAIN,
-        // Your API key from mailgun.com
-        apiKey: process.env.MAILGUN_KEY,
-        // The template section
-        templates: {
-          passwordResetEmail: {
-            subject: 'Reset your password',
-            pathPlainText: resolve(__dirname, 'public/email_templates/password_reset_email.txt'),
-            pathHtml: resolve(__dirname, 'public/email_templates/password_reset_email.html'),
-            callback: (user) => { return { firstName: user.get('firstName') }}
-            // Now you can use {{firstName}} in your templates
-          },
-          verificationEmail: {
-            subject: 'Confirm your account',
-            pathPlainText: resolve(__dirname, 'path/to/templates/verification_email.txt'),
-            pathHtml: resolve(__dirname, 'path/to/templates/verification_email.html'),
-            callback: (user) => { return { firstName: user.get('firstName') }}
-            // Now you can use {{firstName}} in your templates
-          },
-          userInvite: {
-            subject: 'You\'re invited to Garago Smart Library',
-            pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
-            pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html')
-          },
-          userRegistered: {
-            subject: 'New Smart Library user has registered.',
-            pathPlainText: resolve(__dirname, 'public/email_templates/new_user.txt'),
-            pathHtml: resolve(__dirname, 'public/email_templates/new_user.html')
-          }
-        }
-      }
-   }
+  // emailAdapter: {
+  //     module: 'parse-server-mailgun',
+  //     options: {
+  //       // The address that your emails come from
+  //       fromAddress: 'admin@garagosoftware.com',
+  //       // Your domain from mailgun.com
+  //       domain: process.env.MAILDOMAIN,
+  //       // Your API key from mailgun.com
+  //       apiKey: process.env.MAILGUN_KEY,
+  //       // The template section
+  //       templates: {
+  //         passwordResetEmail: {
+  //           subject: 'Reset your password',
+  //           pathPlainText: resolve(__dirname, 'public/email_templates/password_reset_email.txt'),
+  //           pathHtml: resolve(__dirname, 'public/email_templates/password_reset_email.html'),
+  //           callback: (user) => { return { firstName: user.get('firstName') }}
+  //           // Now you can use {{firstName}} in your templates
+  //         },
+  //         verificationEmail: {
+  //           subject: 'Confirm your account',
+  //           pathPlainText: resolve(__dirname, 'path/to/templates/verification_email.txt'),
+  //           pathHtml: resolve(__dirname, 'path/to/templates/verification_email.html'),
+  //           callback: (user) => { return { firstName: user.get('firstName') }}
+  //           // Now you can use {{firstName}} in your templates
+  //         },
+  //         userInvite: {
+  //           subject: 'You\'re invited to Garago Smart Library',
+  //           pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
+  //           pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html')
+  //         },
+  //         userRegistered: {
+  //           subject: 'New Smart Library user has registered.',
+  //           pathPlainText: resolve(__dirname, 'public/email_templates/new_user.txt'),
+  //           pathHtml: resolve(__dirname, 'public/email_templates/new_user.html')
+  //         }
+  //       }
+  //     }
+  //  }
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:

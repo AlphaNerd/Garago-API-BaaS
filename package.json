@@ -12,6 +12,11 @@
     "angular-file-upload": "^2.5.0",
     "aws-sdk": "^2.135.0",
     "color-scheme": "^1.0.0",
+<<<<<<< Updated upstream
+=======
+    "count-words": "^1.0.9",
+    "dotenv": "^4.0.0",
+>>>>>>> Stashed changes
     "express": "~4.11.x",
     "kerberos": "~0.0.x",
     "parse": "~1.8.0",

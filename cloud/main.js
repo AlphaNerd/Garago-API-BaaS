@@ -2,7 +2,7 @@
 const { AppCache } = require('parse-server/lib/cache');
 // Get a reference to the MailgunAdapter
 // NOTE: It's best to do this inside the Parse.Cloud.define(...) method body and not at the top of your file with your other imports. This gives Parse Server time to boot, setup cloud code and the email adapter.
-const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
+// const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
 
 var ColorScheme = require('color-scheme');
 var ActionPlan = Parse.Object.extend("ActionPlans");
@@ -429,28 +429,30 @@ Parse.Cloud.define("inviteUser", function(request, response) {
             console.log(results)
 
             /////// ***** Send Email to User Here ***** ///////
-            MailgunAdapter.send({
-                templateName: 'userInvite',
-                // Optional override of your configuration's subject
-                subject: 'You\'re Invited',
-                // Optional override of the adapter's fromAddress
-                fromAddress: 'admin@garagosoftware.com',
-                recipient: email,
-                variables: {
-                    firstName: request.user.get("firstName"),
-                    lastName: request.user.get("lastName"),
-                    link: "https://garago-dev.herokuapp.com/#/intro",
-                    invite: results
-                }, // {{alert}} will be compiled to 'New posts'
-                // Additional message fields can be included with the "extra" option
-                // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
-                extra: {
-                    attachments: [],
-                    replyTo: 'noreply@garagosoftware.com'
-                }
-            }).then(function(res) {
-                response.success(results);
-            });
+            // MailgunAdapter.send({
+            //     templateName: 'userInvite',
+            //     // Optional override of your configuration's subject
+            //     subject: 'You\'re Invited',
+            //     // Optional override of the adapter's fromAddress
+            //     fromAddress: 'admin@garagosoftware.com',
+            //     recipient: email,
+            //     variables: {
+            //         firstName: request.user.get("firstName"),
+            //         lastName: request.user.get("lastName"),
+            //         link: "https://garago-dev.herokuapp.com/#/intro",
+            //         invite: results
+            //     }, // {{alert}} will be compiled to 'New posts'
+            //     // Additional message fields can be included with the "extra" option
+            //     // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+            //     extra: {
+            //         attachments: [],
+            //         replyTo: 'noreply@garagosoftware.com'
+            //     }
+            // }).then(function(res) {
+            //     response.success(results);
+            // });
+            // TECH NINJA EDITS
+            response.success
         })
         .catch(function(e) {
             response.error(e);
