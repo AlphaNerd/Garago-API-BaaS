@@ -9,7 +9,7 @@ const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
 const textract = require('textract')
 const pdf_extract = require('pdf-text-extract')
 const countWords = require("count-words")
-// const summarizer = require('nodejs-text-summarizer')
+const summarizer = require('nodejs-text-summarizer')
 // const logger = require('logger')
 
 
@@ -316,26 +316,27 @@ Parse.Cloud.afterSave("Files", function(request) {
 
     //// ray's shiznit
     var url = request.object.get("file")._url
-    console.log("URL FOR EXTRACT: ",url)
 
     textract.fromUrl( url, function( error, text_body ) {
         // Error handling
-        if (error) return
+        if (error) return console.log("Got error processing url", url, error);
 
         // Get keyword density
         keywords = countWords( text_body );
-        keywords = Object.key(keywords) .map(function(word){ return Object.keys(word)[0]})
-        // text_body = text_body.split(" ").slice(0, 100).join(' ')
+        keywords = Object.keys(keywords);
+        text_body = text_body.split(" ").slice(0, 100).join(' ')
         // // Summarize the text
-        // var summary = summarizer( text_body );
-        // var summary_keywords = countWords(summary);
+        var summary = summarizer( text_body );
+        var summary_keywords = countWords(summary);
         // // Limit text summary to 100 words
-        // summary = summary.split(" ").slice(0, 100).join(' ');
+        summary = summary.split(" ").slice(0, 100).join(' ');
 
-        console.log("AFTER SAVE EXECUTED");
-        console.log("KEYWORDS: ",keywords)
+        console.log("Summary Stuff", summary, summary_keywords)
+
         var myToken = request.object;
         myToken.set("keywords", keywords);
+        myToken.set("summary", summary);
+        myToken.set("summary_keywords", summary_keywords);
         myToken.save(null, {
             useMasterKey: true,
             success: function () {
@@ -348,8 +349,6 @@ Parse.Cloud.afterSave("Files", function(request) {
 
 
     })
-
-    console.log("MADE IT THIS FAR")
 
 })
 

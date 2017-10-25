@@ -15,7 +15,7 @@
     "count-words": "^1.0.9",
     "express": "~4.11.x",
     "kerberos": "~0.0.x",
-    "logger": "0.0.1",
+    "natural": "^0.5.4",
     "nodejs-text-summarizer": "^2.0.3",
     "parse": "~1.8.0",
     "parse-server": "*",
@@ -27,9 +27,13 @@
     "textract": "^2.2.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js",
+    "fix-summarizer": "sed -ie 's/logger.setLevel('WARN');//g' ./node_modules/natural/lib/natural/brill_pos_tagger/lib/Brill_POS_Tagger.js"
   },
   "engines": {
     "node": ">=4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
