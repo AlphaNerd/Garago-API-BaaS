@@ -4,6 +4,16 @@ const { AppCache } = require('parse-server/lib/cache');
 // NOTE: It's best to do this inside the Parse.Cloud.define(...) method body and not at the top of your file with your other imports. This gives Parse Server time to boot, setup cloud code and the email adapter.
 // const MailgunAdapter = AppCache.get('garagoapi').userController.adapter;
 
+
+/// ray's deps
+const textract = require('textract')
+const pdf_extract = require('pdf-text-extract')
+const countWords = require("count-words")
+// const summarizer = require('nodejs-text-summarizer')
+// const logger = require('logger')
+
+
+
 var ColorScheme = require('color-scheme');
 var ActionPlan = Parse.Object.extend("ActionPlans");
 var Project = Parse.Object.extend("Projects");
@@ -108,12 +118,12 @@ Parse.Cloud.define("createNewActionPlan", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("toggleUploadPrivileges", function(request, response) {
     var query = new Parse.Query(Users)
-    query.equalTo("objectId",request.params.userid)
+    query.equalTo("objectId", request.params.userid)
     query.find({
         success: function(res) {
             console.log("Found User: ", res[0])
-            res[0].set("canUpload",!request.params.mydata)
-            res[0].save(null,{useMasterKey: true}).then(function(res){
+            res[0].set("canUpload", !request.params.mydata)
+            res[0].save(null, { useMasterKey: true }).then(function(res) {
                 response.success(res)
             })
         },
@@ -159,24 +169,24 @@ Parse.Cloud.define("updateRating", function(request, response) {
         var rating = request.params.rating
         var fileId = request.params.fileId
         var query = new Parse.Query(Files)
-        query.equalTo("objectId",fileId)
+        query.equalTo("objectId", fileId)
         query.find({
-            success:function(res){
+            success: function(res) {
                 console.log("FOUND FILE:", res[0])
-                res[0].set("rating",rating)
+                res[0].set("rating", rating)
                 res[0].save({
-                    success: function(res){
-                        console.log("SAVED NEW RATING: ",res)
+                    success: function(res) {
+                        console.log("SAVED NEW RATING: ", res)
                     },
-                    error: function(e,r){
-                        console.log("ERROR SAVING: ",e,r)
+                    error: function(e, r) {
+                        console.log("ERROR SAVING: ", e, r)
                     }
-                }).then(function(res){
+                }).then(function(res) {
                     response.success()
                 })
             },
-            error: function(e,r){
-                console.log(e,r)
+            error: function(e, r) {
+                console.log(e, r)
             }
         })
     } else {
@@ -291,6 +301,60 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
     }
 });
 
+
+
+Parse.Cloud.afterSave("Files", function(request) {
+    console.log("OBJECT AFTERSAVE: ", request.object)
+    var hasKeywords = request.object.get('keywords');
+    var isActive = request.object.get('active');
+    if (hasKeywords || !isActive) {
+        return;
+    }
+
+
+
+
+    //// ray's shiznit
+    var url = request.object.get("file")._url
+    console.log("URL FOR EXTRACT: ",url)
+
+    textract.fromUrl( url, function( error, text_body ) {
+        // Error handling
+        if (error) return
+
+        // Get keyword density
+        keywords = countWords( text_body );
+        keywords = Object.key(keywords) .map(function(word){ return Object.keys(word)[0]})
+        // text_body = text_body.split(" ").slice(0, 100).join(' ')
+        // // Summarize the text
+        // var summary = summarizer( text_body );
+        // var summary_keywords = countWords(summary);
+        // // Limit text summary to 100 words
+        // summary = summary.split(" ").slice(0, 100).join(' ');
+
+        console.log("AFTER SAVE EXECUTED");
+        console.log("KEYWORDS: ",keywords)
+        var myToken = request.object;
+        myToken.set("keywords", keywords);
+        myToken.save(null, {
+            useMasterKey: true,
+            success: function () {
+                console.log('success');
+            },
+            error: function (obj, err) {
+                console.log(err);
+            }
+        });
+
+
+    })
+
+    console.log("MADE IT THIS FAR")
+
+})
+
+
+
 Parse.Cloud.beforeSave("Files", function(request, response) {
     ////check for duplicate names
     var query = new Parse.Query(Files)
@@ -317,7 +381,7 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
 
 
     function finishSave() {
-        var fileURL =  request.object.get("file")._url
+        var fileURL = request.object.get("file")._url
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
 
@@ -487,7 +551,7 @@ Parse.Cloud.define("newUserAdminNotify", function(request, response) {
         }
     }).then(function(res) {
         response.success(res);
-    });    
+    });
 
 })
 
@@ -499,9 +563,9 @@ Parse.Cloud.define("newUserAdminNotify", function(request, response) {
 Parse.Cloud.define("getAllUsers", function(request, response) {
     var query = new Parse.Query(Users)
     var a = request.user.get("isSuperAdmin")
-    if(!a){
+    if (!a) {
         var region = request.user.get("regionId")
-        query.equalTo("regionId",region)
+        query.equalTo("regionId", region)
     }
     query.exists("objectId")
     query.descending("firstName")
@@ -545,16 +609,17 @@ Parse.Cloud.define("getNocCodes", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("deleteUserById", function(request, response) {
     var query = new Parse.Query(Users)
-    query.equalTo("objectId",request.params.userid)
+    query.equalTo("objectId", request.params.userid)
     query.find({
         success: function(res) {
             console.log("Found User: ", res[0])
-            res[0].destroy({useMasterKey: true,
-                success: function(res){
+            res[0].destroy({
+                useMasterKey: true,
+                success: function(res) {
                     console.log("Deleted User")
                     response.success(true)
                 },
-                error:function(e,r){
+                error: function(e, r) {
                     console.log("Error Deleteing User")
                     response.error(false)
                 }
