@@ -32,7 +32,8 @@
     "start": "nodemon index.js",
     "postinstall": "npm run update-summarizer",
     "fix-summarizer": "sed -ie 's/logger.setLevel('WARN');//g' ./node_modules/natural/lib/natural/brill_pos_tagger/lib/Brill_POS_Tagger.js",
-    "update-summarizer": "cd node_modules/natural && npm i natural@latest --save"
+    "update-summarizer": "cd node_modules/nodejs-text-summarizer && npm i natural@latest --save",
+    "deploy:content-indexing": "git add . && git commit -m 'auto-deploy' && git push origin Content-Indexing"
   },
   "engines": {
     "node": ">=4.3"
