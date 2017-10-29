@@ -26,10 +26,11 @@
     "parse-server-mailgun": "^2.4.6",
     "parse-server-s3-adapter": "^1.2.0",
     "pdf-text-extract": "^1.5.0",
+    "pdf-to-text": "0.0.6",
     "textract": "^2.2.0"
   },
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "postinstall": "npm run update-summarizer",
     "fix-summarizer": "sed -ie 's/logger.setLevel('WARN');//g' ./node_modules/natural/lib/natural/brill_pos_tagger/lib/Brill_POS_Tagger.js",
     "update-summarizer": "cd node_modules/nodejs-text-summarizer && npm i natural@latest --save",
