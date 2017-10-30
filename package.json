@@ -34,7 +34,10 @@
     "postinstall": "npm run update-summarizer",
     "fix-summarizer": "sed -ie 's/logger.setLevel('WARN');//g' ./node_modules/natural/lib/natural/brill_pos_tagger/lib/Brill_POS_Tagger.js",
     "update-summarizer": "cd node_modules/nodejs-text-summarizer && npm i natural@latest --save",
-    "deploy:content-indexing": "git add . && git commit -m 'auto-deploy' && git push origin Content-Indexing"
+    "deploy:content-indexing": "git add . && git commit -m 'auto-deploy' && git push origin Content-Indexing",
+    "start:mongo": "mongod --dbpath ../DBL/",
+    "backup": "mongodump -d th -o ../DBL/backup",
+    "restore": "mongorestore -d th ../DBL/backup"
   },
   "engines": {
     "node": ">=4.3"
