@@ -13,10 +13,12 @@
     "aws-sdk": "^2.135.0",
     "color-scheme": "^1.0.0",
     "count-words": "^1.0.9",
+    "dotenv": "^4.0.0",
     "express": "~4.11.x",
     "kerberos": "~0.0.x",
-    "logger": "0.0.1",
+    "natural": "^0.5.4",
     "nodejs-text-summarizer": "^2.0.3",
+    "nodemon": "^1.12.1",
     "parse": "~1.8.0",
     "parse-server": "*",
     "parse-server-amazon-ses-adapter": "^1.0.0",
@@ -36,5 +38,6 @@
   },
   "engines": {
     "node": ">=4.3"
-  }
+  },
+  "devDependencies": {}
 }
