@@ -1,6 +1,0 @@
-Hi {{username}},
-
-Thanks for using {{appName}}.
-
-The AwesomeApp Team
-https://awesomeapp.com

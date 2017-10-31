@@ -3,11 +3,14 @@
 // compatible API routes.
 // rays changes
 require('dotenv').config();
+
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
 var fs = require('fs');
 const resolve = require('path').resolve;
+// rays changes
+const parse_dashboard = require('./routes');
 
 var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
@@ -93,6 +96,7 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 // Serve the Parse API on the /parse URL prefix
 var mountPath = process.env.PARSE_MOUNT || '/parse';
 app.use(mountPath, api);
+app.use(parse_dashboard)
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/test', function(req, res) {
