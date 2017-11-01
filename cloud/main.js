@@ -63,6 +63,34 @@ Parse.Cloud.define("validateBetaUser", function(request, response) {
 
 })
 
+Parse.Cloud.define("requestFileApproval", function(request,response){
+    var email = request.params.email
+    var filelink = request.params.filelink
+    var filetitle = request.params.filetitle
+    MailgunAdapter.send({
+        templateName: 'fileApproval',
+        // Optional override of your configuration's subject
+        subject: 'Your approval is required.',
+        // Optional override of the adapter's fromAddress
+        fromAddress: 'admin@garagosoftware.com',
+        recipient: email,
+        variables: {
+            firstName: request.user.get("firstName"),
+            lastName: request.user.get("lastName"),
+            link: filelink,
+            title: filetitle
+        },
+        // Additional message fields can be included with the "extra" option
+        // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+        extra: {
+            attachments: [],
+            replyTo: 'noreply@garagosoftware.com'
+        }
+    }).then(function(res) {
+        response.success(results);
+    });
+})
+
 Parse.Cloud.define("createNewActionPlan", function(request, response) {
     if (request.user) {
         var plan = new ActionPlan();
@@ -489,29 +517,29 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         .then(function(results) {
             console.log(results)
 
-            /////// ***** Send Email to User Here ***** ///////
-            // MailgunAdapter.send({
-            //     templateName: 'userInvite',
-            //     // Optional override of your configuration's subject
-            //     subject: 'You\'re Invited',
-            //     // Optional override of the adapter's fromAddress
-            //     fromAddress: 'admin@garagosoftware.com',
-            //     recipient: email,
-            //     variables: {
-            //         firstName: request.user.get("firstName"),
-            //         lastName: request.user.get("lastName"),
-            //         link: "https://garago-dev.herokuapp.com/#/intro",
-            //         invite: results
-            //     }, // {{alert}} will be compiled to 'New posts'
-            //     // Additional message fields can be included with the "extra" option
-            //     // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
-            //     extra: {
-            //         attachments: [],
-            //         replyTo: 'noreply@garagosoftware.com'
-            //     }
-            // }).then(function(res) {
-            //     response.success(results);
-            // });
+            ///// ***** Send Email to User Here ***** ///////
+            MailgunAdapter.send({
+                templateName: 'userInvite',
+                // Optional override of your configuration's subject
+                subject: 'You\'re Invited',
+                // Optional override of the adapter's fromAddress
+                fromAddress: 'admin@garagosoftware.com',
+                recipient: email,
+                variables: {
+                    firstName: request.user.get("firstName"),
+                    lastName: request.user.get("lastName"),
+                    link: "https://garago-dev.herokuapp.com/#/intro",
+                    invite: results
+                },
+                // Additional message fields can be included with the "extra" option
+                // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+                extra: {
+                    attachments: [],
+                    replyTo: 'noreply@garagosoftware.com'
+                }
+            }).then(function(res) {
+                response.success(results);
+            });
             response.success(results)
         })
         .catch(function(e) {
