@@ -13,6 +13,7 @@
     "aws-sdk": "^2.135.0",
     "color-scheme": "^1.0.0",
     "count-words": "^1.0.9",
+    "csurf": "^1.9.0",
     "dotenv": "^4.0.0",
     "express": "~4.11.x",
     "kerberos": "~0.0.x",
@@ -20,6 +21,7 @@
     "nodejs-text-summarizer": "^2.0.3",
     "nodemon": "^1.12.1",
     "parse": "~1.8.0",
+    "parse-dashboard": "^1.1.2",
     "parse-server": "*",
     "parse-server-amazon-ses-adapter": "^1.0.0",
     "parse-server-fs-adapter": "^1.0.1",
@@ -30,11 +32,14 @@
     "textract": "^2.2.0"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "postinstall": "npm run update-summarizer",
     "fix-summarizer": "sed -ie 's/logger.setLevel('WARN');//g' ./node_modules/natural/lib/natural/brill_pos_tagger/lib/Brill_POS_Tagger.js",
     "update-summarizer": "cd node_modules/nodejs-text-summarizer && npm i natural@latest --save",
-    "deploy:content-indexing": "git add . && git commit -m 'auto-deploy' && git push origin Content-Indexing"
+    "deploy:content-indexing": "git add . && git commit -m 'auto-deploy' && git push origin Content-Indexing",
+    "start:mongo": "mongod --dbpath ../DBL/",
+    "backup": "mongodump -d heroku_2tbmls72 -o .backup",
+    "restore": "mongorestore -d heroku_2tbmls72 .backup/backup"
   },
   "engines": {
     "node": ">=4.3"

@@ -1,0 +1,18 @@
+{
+    "allowInsecureHTTP": true,
+    "apps": [{
+        "appId": "garagoapi",
+        "appName": "garagoapi",
+        "masterKey": "key",
+        "serverURL": "http://localhost:3000/parse"
+    }],
+    "port": 4040,
+    "users": [{
+        "user": "ray",
+        "pass": "ray",
+        "apps": [{
+            "appId": "garagoapi"
+        }]
+    }],
+    "useEncryptedPasswords": false
+}
