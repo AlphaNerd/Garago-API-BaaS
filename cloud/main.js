@@ -381,8 +381,6 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
         var fileURL = request.object.get("file")._url
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
-        var invitedBy = request.user.get("invitedBy")
-        request.object.set("approver", invitedBy.id)
         if (request.user) {
             var userObj = {
                 id: request.user.id,
@@ -532,6 +530,35 @@ Parse.Cloud.define("requestApproval", function(request, response) {
         templateName: 'approveFile',
         // Optional override of your configuration's subject
         subject: 'A new file upload requires your approval.',
+        // Optional override of the adapter's fromAddress
+        fromAddress: 'admin@garagosoftware.com',
+        recipient: invitedBy.email,
+        variables: {
+            firstName: request.user.get("firstName"),
+            lastName: request.user.get("lastName"),
+        }, // {{alert}} will be compiled to 'New posts'
+        // Additional message fields can be included with the "extra" option
+        // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+        extra: {
+            attachments: [],
+            replyTo: 'noreply@garagosoftware.com'
+        }
+    }).then(function(res) {
+        response.success(res);
+    });
+})
+
+
+///////////////////////////////////////////////////////
+/////////// FILE APPROVED            ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("fileapproved", function(request, response) {
+
+
+    MailgunAdapter.send({
+        templateName: 'fileApproved',
+        // Optional override of your configuration's subject
+        subject: 'Your recent upload has been approved.',
         // Optional override of the adapter's fromAddress
         fromAddress: 'admin@garagosoftware.com',
         recipient: invitedBy.email,

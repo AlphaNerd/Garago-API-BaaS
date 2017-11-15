@@ -84,6 +84,11 @@ var api = new ParseServer({
             subject: 'New files are waiting for your approval.',
             pathPlainText: resolve(__dirname, 'public/email_templates/approvefiles.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/approvefiles.html')
+          },
+          fileApproved: {
+            subject: 'Your recent upload has been approved.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/fileapproved.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/fileapproved.html')
           }
         }
       }
