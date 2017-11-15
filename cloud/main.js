@@ -555,6 +555,7 @@ Parse.Cloud.define("requestApproval", function(request, response) {
 Parse.Cloud.define("fileapproved", function(request, response) {
 
     var filename = request.params.title
+    var sendTo = request.params.sendTo
 
     MailgunAdapter.send({
         templateName: 'fileApproved',
@@ -562,7 +563,7 @@ Parse.Cloud.define("fileapproved", function(request, response) {
         subject: 'Your recent upload has been approved.',
         // Optional override of the adapter's fromAddress
         fromAddress: 'admin@garagosoftware.com',
-        recipient: invitedBy.email,
+        recipient: sendTo,
         variables: {
             firstName: request.user.get("firstName"),
             lastName: request.user.get("lastName"),
