@@ -381,7 +381,8 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
         var fileURL = request.object.get("file")._url
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
-
+        var invitedBy = request.user.get("invitedBy")
+        request.object.set("approver", invitedBy.id)
         if (request.user) {
             var userObj = {
                 id: request.user.id,
