@@ -79,6 +79,11 @@ var api = new ParseServer({
             subject: 'New Smart Library user has registered.',
             pathPlainText: resolve(__dirname, 'public/email_templates/new_user.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/new_user.html')
+          },
+          approveFile: {
+            subject: 'New files are waiting for your approval.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/approvefiles.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/approvefiles.html')
           }
         }
       }
