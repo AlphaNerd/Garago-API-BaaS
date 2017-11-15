@@ -554,6 +554,7 @@ Parse.Cloud.define("requestApproval", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("fileapproved", function(request, response) {
 
+    var filename = request.params.title
 
     MailgunAdapter.send({
         templateName: 'fileApproved',
@@ -565,6 +566,7 @@ Parse.Cloud.define("fileapproved", function(request, response) {
         variables: {
             firstName: request.user.get("firstName"),
             lastName: request.user.get("lastName"),
+            file: filename
         }, // {{alert}} will be compiled to 'New posts'
         // Additional message fields can be included with the "extra" option
         // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
