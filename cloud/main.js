@@ -392,7 +392,11 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
                 email: request.user.attributes.email,
                 image: request.user.attributes.image,
             }
-            request.object.set("createdByUser", request.user)
+            if(request.object.get("createdByUser").id){
+                console.log("cannot overright this property")
+            }else{
+                request.object.set("createdByUser", request.user)
+            }
             request.object.set("createdBy", userObj)
             // var myRating = request.object.get("rating") || 0
             // request.object.set("rating", myrating)
