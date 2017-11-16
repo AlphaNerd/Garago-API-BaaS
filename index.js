@@ -14,7 +14,7 @@ const parse_dashboard = require('./routes');
 
 var S3Adapter = require('parse-server-s3-adapter');
 var s3Options = {
-  "bucket": "garago-bucket",
+  "bucket": "petl",
   // optional:
   // "region": 'us-east-1', // default value
   // "bucketPrefix": '', // default value
