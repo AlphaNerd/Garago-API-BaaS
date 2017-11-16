@@ -536,6 +536,7 @@ Parse.Cloud.define("requestApproval", function(request, response) {
         variables: {
             firstName: request.user.get("firstName"),
             lastName: request.user.get("lastName"),
+            link: 'http://documents.garago.net/#/app/library/approvals'
         }, // {{alert}} will be compiled to 'New posts'
         // Additional message fields can be included with the "extra" option
         // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
