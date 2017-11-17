@@ -382,7 +382,7 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
         var isNewFile = request.object.get("createdBy") ? true : false
-        if (request.user && isNewFile) {
+        if (request.user && !isNewFile) {
             var userObj = {
                 id: request.user.id,
                 name: {
