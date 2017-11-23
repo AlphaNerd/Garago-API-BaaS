@@ -393,12 +393,12 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
                 email: request.user.attributes.email,
                 image: request.user.attributes.image,
             }
-            request.object.set("createdBy", userObj)
-            // if(request.object.get("createdBy").id){
-            //     console.log("cannot overright this property")
-            // }else{
-            //     request.object.set("createdBy", userObj)
-            // }
+            // request.object.set("createdBy", userObj)
+            if(request.object.get("createdBy").id){
+                console.log("cannot overright this property")
+            }else{
+                request.object.set("createdBy", userObj)
+            }
             // var myRating = request.object.get("rating") || 0
             // request.object.set("rating", myrating)
         } else {
@@ -504,7 +504,7 @@ Parse.Cloud.define("inviteUser", function(request, response) {
                 variables: {
                     firstName: request.user.get("firstName"),
                     lastName: request.user.get("lastName"),
-                    link: "https://garago-dev.herokuapp.com/#/intro",
+                    link: "http://documents.garago.net/#/register",
                     invite: results
                 }, // {{alert}} will be compiled to 'New posts'
                 // Additional message fields can be included with the "extra" option
@@ -567,6 +567,37 @@ Parse.Cloud.define("fileapproved", function(request, response) {
         templateName: 'fileApproved',
         // Optional override of your configuration's subject
         subject: 'Your recent upload has been approved.',
+        // Optional override of the adapter's fromAddress
+        fromAddress: 'admin@garagosoftware.com',
+        recipient: sendTo,
+        variables: {
+            firstName: request.user.get("firstName"),
+            lastName: request.user.get("lastName"),
+            file: filename
+        }, // {{alert}} will be compiled to 'New posts'
+        // Additional message fields can be included with the "extra" option
+        // See https://nodemailer.com/extras/mailcomposer/#e-mail-message-fields for an overview of what can be included
+        extra: {
+            attachments: [],
+            replyTo: 'noreply@garagosoftware.com'
+        }
+    }).then(function(res) {
+        response.success(res);
+    });
+})
+
+///////////////////////////////////////////////////////
+/////////// FILE DCLINED            ///////////////////
+///////////////////////////////////////////////////////
+Parse.Cloud.define("filedeclined", function(request, response) {
+
+    var filename = request.params.title
+    var sendTo = request.params.sendTo
+
+    MailgunAdapter.send({
+        templateName: 'fileDeclined',
+        // Optional override of your configuration's subject
+        subject: 'Your recent upload has been declined.',
         // Optional override of the adapter's fromAddress
         fromAddress: 'admin@garagosoftware.com',
         recipient: sendTo,

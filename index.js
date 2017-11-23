@@ -89,6 +89,11 @@ var api = new ParseServer({
             subject: 'Your recent upload has been approved.',
             pathPlainText: resolve(__dirname, 'public/email_templates/fileapproved.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/fileapproved.html')
+          },
+          fileDeclined: {
+            subject: 'Your recent upload has been declined.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/filedeclined.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/filedeclined.html')
           }
         }
       }
