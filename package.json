@@ -16,6 +16,7 @@
     "csurf": "^1.9.0",
     "dotenv": "^4.0.0",
     "express": "~4.11.x",
+    "express-force-ssl": "^0.3.2",
     "forever": "^0.15.3",
     "kerberos": "~0.0.x",
     "natural": "^0.5.4",

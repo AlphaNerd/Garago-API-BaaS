@@ -104,6 +104,8 @@ var api = new ParseServer({
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
 var app = express();
+var forceSsl = require('express-force-ssl');
+app.use(forceSsl);
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
@@ -127,8 +129,28 @@ app.get('/test', function(req, res) {
 var port = process.env.PORT || 1337;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {
-    console.log('Garago running on port ' + port + '.');
+    console.log('Garago HTTP running on port ' + port + '.');
 });
+
+////// HTTPS - SSL //////////
+var key = fs.readFileSync('encryption/private.key');
+var cert = fs.readFileSync( 'encryption/primary.crt' );
+var ca = fs.readFileSync( 'encryption/intermediate.crt' );
+
+var httpsOptions = {
+  key: key,
+  cert: cert,
+  ca: ca
+};
+
+var httpsServer = require("https").createServer(httpsOptions,app);
+httpsServer.listen(443,function(){
+  console.log('Garago HTTPS running on port 443');
+})
+
+
+
+
 
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);

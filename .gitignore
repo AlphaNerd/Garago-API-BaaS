@@ -6,3 +6,4 @@ Garago/**/*
 .DS_Store
 .backup
 .dbl
+encryption/*
