@@ -75,25 +75,50 @@ var api = new ParseServer({
             pathPlainText: resolve(__dirname, 'public/email_templates/user_invite.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/user_invite.html')
           },
+          userInvite_fr: {
+            subject: 'You\'re invited to Garago Smart Library',
+            pathPlainText: resolve(__dirname, 'public/email_templates/user_invite_fr.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/user_invite_fr.html')
+          },
           userRegistered: {
             subject: 'New Smart Library user has registered.',
             pathPlainText: resolve(__dirname, 'public/email_templates/new_user.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/new_user.html')
+          },
+          userRegistered_fr: {
+            subject: 'New Smart Library user has registered.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/new_user_fr.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/new_user_fr.html')
           },
           approveFile: {
             subject: 'New files are waiting for your approval.',
             pathPlainText: resolve(__dirname, 'public/email_templates/approvefiles.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/approvefiles.html')
           },
+          approveFile_fr: {
+            subject: 'New files are waiting for your approval.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/approvefiles_fr.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/approvefiles_fr.html')
+          },
           fileApproved: {
             subject: 'Your recent upload has been approved.',
             pathPlainText: resolve(__dirname, 'public/email_templates/fileapproved.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/fileapproved.html')
           },
+          fileApproved_fr: {
+            subject: 'Your recent upload has been approved.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/fileapproved_fr.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/fileapproved_fr.html')
+          },
           fileDeclined: {
             subject: 'Your recent upload has been declined.',
             pathPlainText: resolve(__dirname, 'public/email_templates/filedeclined.txt'),
             pathHtml: resolve(__dirname, 'public/email_templates/filedeclined.html')
+          },
+          fileDeclined_fr: {
+            subject: 'Your recent upload has been declined.',
+            pathPlainText: resolve(__dirname, 'public/email_templates/filedeclined_fr.txt'),
+            pathHtml: resolve(__dirname, 'public/email_templates/filedeclined_fr.html')
           }
         }
       }
