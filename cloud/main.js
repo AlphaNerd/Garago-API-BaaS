@@ -464,9 +464,20 @@ Parse.Cloud.define("inviteUser", function(request, response) {
         .then(function(results) {
             console.log(results)
 
+            var lang = request.user.get("language")
+            var template;
+            switch (lang) {
+                case "en":
+                    template = "userInvite";
+                    break;
+                case "fr":
+                    day = "userInvite_fr";
+                    break;
+            }
+
             /////// ***** Send Email to User Here ***** ///////
             MailgunAdapter.send({
-                templateName: 'userInvite',
+                templateName: template,
                 // Optional override of your configuration's subject
                 subject: 'You\'re Invited',
                 // Optional override of the adapter's fromAddress
@@ -501,9 +512,20 @@ Parse.Cloud.define("inviteUser", function(request, response) {
 Parse.Cloud.define("requestApproval", function(request, response) {
     var region = request.user.get("regionId")
     var invitedBy = request.user.get("invitedBy")
+    
+    var lang = request.user.get("language")
+    var template;
+    switch (lang) {
+        case "en":
+            template = "approveFile";
+            break;
+        case "fr":
+            day = "approveFile_fr";
+            break;
+    }
 
     MailgunAdapter.send({
-        templateName: 'approveFile',
+        templateName: template,
         // Optional override of your configuration's subject
         subject: 'A new file upload requires your approval.',
         // Optional override of the adapter's fromAddress
@@ -534,8 +556,19 @@ Parse.Cloud.define("fileapproved", function(request, response) {
     var filename = request.params.title
     var sendTo = request.params.sendTo
 
+    var lang = request.user.get("language")
+    var template;
+    switch (lang) {
+        case "en":
+            template = "fileApproved";
+            break;
+        case "fr":
+            day = "fileApproved_fr";
+            break;
+    }
+
     MailgunAdapter.send({
-        templateName: 'fileApproved',
+        templateName: template,
         // Optional override of your configuration's subject
         subject: 'Your recent upload has been approved.',
         // Optional override of the adapter's fromAddress
@@ -565,8 +598,19 @@ Parse.Cloud.define("filedeclined", function(request, response) {
     var filename = request.params.title
     var sendTo = request.params.sendTo
 
+    var lang = request.user.get("language")
+    var template;
+    switch (lang) {
+        case "en":
+            template = "fileDeclined";
+            break;
+        case "fr":
+            day = "fileDeclined_fr";
+            break;
+    }
+
     MailgunAdapter.send({
-        templateName: 'fileDeclined',
+        templateName: template,
         // Optional override of your configuration's subject
         subject: 'Your recent upload has been declined.',
         // Optional override of the adapter's fromAddress
@@ -596,9 +640,21 @@ Parse.Cloud.define("filedeclined", function(request, response) {
 ///////////////////////////////////////////////////////
 Parse.Cloud.define("newUserAdminNotify", function(request, response) {
     var invitedBy = request.params.invitedBy
+
+    var lang = request.user.get("language")
+    var template;
+    switch (lang) {
+        case "en":
+            template = "userRegistered";
+            break;
+        case "fr":
+            day = "userRegistered_fr";
+            break;
+    }
+
     /////// ***** Send Email to User Here ***** ///////
     MailgunAdapter.send({
-        templateName: 'userRegistered',
+        templateName: template,
         // Optional override of your configuration's subject
         subject: 'New Member at PETL Smart Library',
         // Optional override of the adapter's fromAddress
