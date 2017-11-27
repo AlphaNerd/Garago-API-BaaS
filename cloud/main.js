@@ -34,35 +34,6 @@ var AWS = require('aws-sdk/global');
 var S3 = require('aws-sdk/clients/s3');
 
 
-Parse.Cloud.define("validateBetaUser", function(request, response) {
-    var betaUsers = [
-        "ashley.counsell@gnb.ca",
-        "vivienne.sprague@gnb.ca",
-        "kim.moyer@gnb.ca",
-        "kylah.maher@gnb.ca",
-        "linda.hache2@gnb.ca",
-        "emilie.lebel@gnb.ca",
-        "luc.ringuette@gnb.ca",
-        "nicole.arsenaultleblanc@gnb.ca"
-    ]
-
-    function checkBetaEmail() {
-        console.log("VERIFY BETA USER")
-        if (betaUsers.indexOf(request.params.email) != -1) {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    if (checkBetaEmail()) {
-        response.success(true)
-    } else {
-        response.success(false)
-    }
-
-})
-
 Parse.Cloud.define("createNewActionPlan", function(request, response) {
     if (request.user) {
         var plan = new ActionPlan();
