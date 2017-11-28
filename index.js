@@ -129,8 +129,9 @@ var api = new ParseServer({
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
 var app = express();
-var forceSsl = require('express-force-ssl');
-app.use(forceSsl);
+
+// var forceSsl = require('express-force-ssl');
+// app.use(forceSsl);
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')));
@@ -157,21 +158,22 @@ httpServer.listen(port, function() {
     console.log('Garago HTTP running on port ' + port + '.');
 });
 
-////// HTTPS - SSL //////////
-var key = fs.readFileSync('encryption/private.key');
-var cert = fs.readFileSync( 'encryption/primary.crt' );
-var ca = fs.readFileSync( 'encryption/intermediate.crt' );
 
-var httpsOptions = {
-  key: key,
-  cert: cert,
-  ca: ca
-};
+// ////// HTTPS - SSL //////////
+// var key = fs.readFileSync('encryption/private.key');
+// var cert = fs.readFileSync( 'encryption/primary.crt' );
+// var ca = fs.readFileSync( 'encryption/intermediate.crt' );
 
-var httpsServer = require("https").createServer(httpsOptions,app);
-httpsServer.listen(443,function(){
-  console.log('Garago HTTPS running on port 443');
-})
+// var httpsOptions = {
+//   key: key,
+//   cert: cert,
+//   ca: ca
+// };
+
+// var httpsServer = require("https").createServer(httpsOptions,app);
+// httpsServer.listen(443,function(){
+//   console.log('Garago HTTPS running on port 443');
+// })
 
 
 
