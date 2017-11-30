@@ -159,21 +159,21 @@ httpServer.listen(port, function() {
 });
 
 
-////// HTTPS - SSL //////////
-var key = fs.readFileSync('./SSL/domain.key');
-var cert = fs.readFileSync( './SSL/primary.cer' );
-var ca = fs.readFileSync( './SSL/intermediate.cer' );
+// ////// HTTPS - SSL //////////
+// var key = fs.readFileSync('./SSL/domain.key');
+// var cert = fs.readFileSync( './SSL/primary.cer' );
+// var ca = fs.readFileSync( './SSL/intermediate.cer' );
 
-var httpsOptions = {
-  key: key,
-  cert: cert,
-  ca: ca
-};
+// var httpsOptions = {
+//   key: key,
+//   cert: cert,
+//   ca: ca
+// };
 
-var httpsServer = require("https").createServer(httpsOptions,app);
-httpsServer.listen(443,function(){
-  console.log('Garago HTTPS running on port 443');
-})
+// var httpsServer = require("https").createServer(httpsOptions,app);
+// httpsServer.listen(443,function(){
+//   console.log('Garago HTTPS running on port 443');
+// })
 
 
 
