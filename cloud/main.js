@@ -354,28 +354,28 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
         request.object.set("type", type[type.length - 1])
         // var invitedBy = request.user.get("invitedBy")
         // var isNewFile = invitedBy.id ? true : false
-        if (request.user) {
-            var userObj = {
-                id: request.user.id,
-                name: {
-                    first: request.user.get("firstName"),
-                    last: request.user.get("lastName"),
-                    username: request.user.get("username")
-                },
-                email: request.user.attributes.email,
-                image: request.user.attributes.image,
-            }
-            // request.object.set("createdBy", userObj)
-            if(request.object.get("createdByUser").id){
-                console.log("cannot overright this property")
-            }else{
-                request.object.set("createdByUser", userObj)
-            }
-            // var myRating = request.object.get("rating") || 0
-            // request.object.set("rating", myrating)
-        } else {
-            // request.object.set("createdBy","ROGIfaTamg")
-        }
+        // if (request.user) {
+        //     var userObj = {
+        //         id: request.user.id,
+        //         name: {
+        //             first: request.user.get("firstName"),
+        //             last: request.user.get("lastName"),
+        //             username: request.user.get("username")
+        //         },
+        //         email: request.user.attributes.email,
+        //         image: request.user.attributes.image,
+        //     }
+        //     request.object.set("createdBy", userObj)
+        //     if(request.object.get("createdBy").id){
+        //         console.log("cannot overright this property")
+        //     }else{
+        //         request.object.set("createdBy", userObj)
+        //     }
+        //     // var myRating = request.object.get("rating") || 0
+        //     // request.object.set("rating", myrating)
+        // } else {
+        //     // request.object.set("createdBy","ROGIfaTamg")
+        // }
 
         try {
             /// set icons
