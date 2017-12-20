@@ -160,9 +160,9 @@ httpServer.listen(port, function() {
 
 
 // ////// HTTPS - SSL //////////
-// var key = fs.readFileSync('./SSL/domain.key');
-// var cert = fs.readFileSync( './SSL/primary.cer' );
-// var ca = fs.readFileSync( './SSL/intermediate.cer' );
+// var key = fs.readFileSync('/SSL/domain.key');
+// var cert = fs.readFileSync( '/SSL/primary.cer' );
+// var ca = fs.readFileSync( '/SSL/intermediate.cer' );
 
 // var httpsOptions = {
 //   key: key,
