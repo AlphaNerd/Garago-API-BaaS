@@ -352,30 +352,37 @@ Parse.Cloud.beforeSave("Files", function(request, response) {
         var fileURL = request.object.get("file")._url
         var type = request.object.get("file")._name.split(".")
         request.object.set("type", type[type.length - 1])
-        // var invitedBy = request.user.get("invitedBy")
-        // var isNewFile = invitedBy.id ? true : false
-        // if (request.user) {
-        //     var userObj = {
-        //         id: request.user.id,
-        //         name: {
-        //             first: request.user.get("firstName"),
-        //             last: request.user.get("lastName"),
-        //             username: request.user.get("username")
-        //         },
-        //         email: request.user.attributes.email,
-        //         image: request.user.attributes.image,
-        //     }
-        //     request.object.set("createdBy", userObj)
-        //     if(request.object.get("createdBy").id){
-        //         console.log("cannot overright this property")
-        //     }else{
-        //         request.object.set("createdBy", userObj)
-        //     }
-        //     // var myRating = request.object.get("rating") || 0
-        //     // request.object.set("rating", myrating)
-        // } else {
-        //     // request.object.set("createdBy","ROGIfaTamg")
-        // }
+        
+        if (request.user) {
+            try{
+                var invitedBy = request.user.get("invitedBy")
+                var isNewFile = invitedBy.id ? true : false    
+            }
+            catch(e){
+                console.log("var invitedBy = request.user.get('invitedBy') DID NOT WORK")
+            }
+            
+            var userObj = {
+                id: request.user.id,
+                name: {
+                    first: request.user.get("firstName"),
+                    last: request.user.get("lastName"),
+                    username: request.user.get("username")
+                },
+                email: request.user.attributes.email,
+                image: request.user.attributes.image,
+            }
+            request.object.set("createdBy", userObj)
+            if(request.object.get("createdBy").id){
+                console.log("cannot overright this property")
+            }else{
+                request.object.set("createdBy", userObj)
+            }
+            // var myRating = request.object.get("rating") || 0
+            // request.object.set("rating", myrating)
+        } else {
+            // request.object.set("createdBy","ROGIfaTamg")
+        }
 
         try {
             /// set icons
