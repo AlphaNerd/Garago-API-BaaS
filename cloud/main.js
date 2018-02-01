@@ -278,11 +278,9 @@ Parse.Cloud.afterSave("Files", function(request) {
     console.log("OBJECT AFTERSAVE: ", request.object)
     var hasKeywords = request.object.get('keywords');
     var isActive = request.object.get('active');
-    if (hasKeywords || !isActive) {
-        return;
-    }
-
-
+    // if (hasKeywords || !isActive) {
+    //     return;
+    // }
 
 
     //// ray's shiznit
