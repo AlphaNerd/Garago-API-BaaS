@@ -278,6 +278,7 @@ Parse.Cloud.afterSave("Files", function(request) {
     console.log("OBJECT AFTERSAVE: ", request.object)
     var hasKeywords = request.object.get('keywords');
     var isActive = request.object.get('active');
+    
     // if (hasKeywords || !isActive) {
     //     return;
     // }
@@ -290,15 +291,20 @@ Parse.Cloud.afterSave("Files", function(request) {
         // Error handling
         if (error) return console.log("Got error processing url", url, error);
 
-        // Get keyword density
-        keywords = countWords( text_body );
-        keywords = Object.keys(keywords);
-        text_body = text_body.split(" ").slice(0, 100).join(' ')
-        // // Summarize the text
-        var summary = summarizer( text_body );
-        var summary_keywords = countWords(summary);
-        // // Limit text summary to 100 words
-        summary = summary.split(" ").slice(0, 100).join(' ');
+        try{
+            // Get keyword density
+            keywords = countWords( text_body );
+            keywords = Object.keys(keywords);
+            text_body = text_body.split(" ").slice(0, 100).join(' ')
+            // // Summarize the text
+            var summary = summarizer( text_body );
+            var summary_keywords = countWords(summary);
+            // // Limit text summary to 100 words
+            summary = summary.split(" ").slice(0, 100).join(' ');
+        }
+        catch(e){
+            console.log("Keyword Error: ",e)   
+        }
 
         var myToken = request.object;
         myToken.set("keywords", keywords);
