@@ -272,59 +272,61 @@ Parse.Cloud.define("addUserFavFile", function(request, response) {
     }
 });
 
-
-
-Parse.Cloud.afterSave("Files", function(request) {
-    console.log("AFTER SAVE: ",request)
-    console.log("OBJECT AFTERSAVE: ", request.object)
-    var hasKeywords = request.object.get('keywords');
-    var isActive = request.object.get('active');
-
-    // if (hasKeywords || !isActive) {
-    //     return;
-    // }
-
-
-    //// ray's shiznit
-    var url = request.object.get("file")._url
-
-    textract.fromUrl( url, function( error, text_body ) {
-        // Error handling
-        if (error) return console.log("Got error processing url", url, error);
-
-        try{
-            // Get keyword density
-            keywords = countWords( text_body );
-            keywords = Object.keys(keywords);
-            text_body = text_body.split(" ").slice(0, 100).join(' ')
-            // // Summarize the text
-            var summary = summarizer( text_body );
-            var summary_keywords = countWords(summary);
-            // // Limit text summary to 100 words
-            summary = summary.split(" ").slice(0, 100).join(' ');
-        }
-        catch(e){
-            console.log("Keyword Error: ",e)   
-        }
-
-        var myToken = request.object;
-        myToken.set("keywords", keywords);
-        myToken.set("summary", summary);
-        myToken.set("summary_keywords", summary_keywords);
-        myToken.save(null, {
-            useMasterKey: true,
-            success: function () {
-                console.log('success');
-            },
-            error: function (obj, err) {
-                console.log(err);
-            }
-        });
-
-
-    })
-
+Parse.Cloud.afterSave("Files",function(request){
+    console.error("BLA BLA BLA")
 })
+
+// Parse.Cloud.afterSave("Files", function(request) {
+//     console.log("AFTER SAVE: ",request)
+//     console.log("OBJECT AFTERSAVE: ", request.object)
+//     var hasKeywords = request.object.get('keywords');
+//     var isActive = request.object.get('active');
+
+//     // if (hasKeywords || !isActive) {
+//     //     return;
+//     // }
+
+
+//     //// ray's shiznit
+//     var url = request.object.get("file")._url
+
+//     textract.fromUrl( url, function( error, text_body ) {
+//         // Error handling
+//         if (error) return console.log("Got error processing url", url, error);
+
+//         try{
+//             // Get keyword density
+//             keywords = countWords( text_body );
+//             keywords = Object.keys(keywords);
+//             text_body = text_body.split(" ").slice(0, 100).join(' ')
+//             // // Summarize the text
+//             var summary = summarizer( text_body );
+//             var summary_keywords = countWords(summary);
+//             // // Limit text summary to 100 words
+//             summary = summary.split(" ").slice(0, 100).join(' ');
+//         }
+//         catch(e){
+//             console.log("Keyword Error: ",e)   
+//         }
+
+//         var myToken = request.object;
+//         myToken.set("keywords", keywords);
+//         myToken.set("summary", summary);
+//         myToken.set("summary_keywords", summary_keywords);
+//         myToken.save(null, {
+//             useMasterKey: true,
+//             success: function () {
+//                 console.log('success');
+//             },
+//             error: function (obj, err) {
+//                 console.log(err);
+//             }
+//         });
+
+
+//     })
+
+// })
 
 
 
