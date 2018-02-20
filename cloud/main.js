@@ -280,9 +280,9 @@ Parse.Cloud.afterSave("Files", function(request) {
     var hasKeywords = request.object.get('keywords');
     var isActive = request.object.get('active');
 
-    if (hasKeywords || !isActive) {
-        return;
-    }
+    // if (hasKeywords || !isActive) {
+    //     return;
+    // }
 
 
     //// ray's shiznit
@@ -315,9 +315,11 @@ Parse.Cloud.afterSave("Files", function(request) {
             useMasterKey: true,
             success: function () {
                 console.log('success');
+                response.success()
             },
             error: function (obj, err) {
                 console.log(err);
+                response.error(err)
             }
         });
 
